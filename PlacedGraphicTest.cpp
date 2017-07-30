@@ -38,3 +38,14 @@ TEST(setGraphic, PlacedGraphic)
     
     CHECK_EQUAL(vg, pg.getGraphic());
 }
+
+TEST(equal, PlacedGraphic)
+{
+    VG::HVectorGraphic vg1(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg1(VG::Point(2, 2), vg1);
+    
+    VG::HVectorGraphic vg2(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg2(VG::Point(2, 2), vg2);
+    
+    CHECK_EQUAL(false, pg1 == pg2)
+}

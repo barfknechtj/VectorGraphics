@@ -8,6 +8,7 @@
 
 #include "PlacedGraphic.hpp"
 
+
 Framework::PlacedGraphic::PlacedGraphic()
     : placementPoint(Point())
 {
@@ -37,4 +38,14 @@ void Framework::PlacedGraphic::setGraphic(HVectorGraphic const& graphic)
 VG::HVectorGraphic const& Framework::PlacedGraphic::getGraphic() const
 {
     return hGraphic;
+}
+
+bool Framework::PlacedGraphic::operator==(const PlacedGraphic& rhs) const
+{
+    return placementPoint == rhs.placementPoint && hGraphic == rhs.hGraphic;
+}
+
+bool Framework::PlacedGraphic::operator!=(const PlacedGraphic& rhs) const
+{
+    return !(*this == rhs);
 }
