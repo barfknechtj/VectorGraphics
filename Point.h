@@ -7,6 +7,7 @@ namespace VG
     class Point
     {
     public:
+        constexpr Point() : myX{0}, myY(0) { }
         constexpr Point(int x, int y) : myX{x}, myY{y} { }
         
         constexpr int getX() const { return myX; }
