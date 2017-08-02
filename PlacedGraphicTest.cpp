@@ -21,7 +21,7 @@ TEST(ctor, PlacedGraphic)
     CHECK_EQUAL(vg, pg.getGraphic());
 }
 
-TEST(setPlacementPoint, PlacedGraphic)
+TEST(getAndSetPlacementPoint, PlacedGraphic)
 {
     Framework::PlacedGraphic graphic;
     graphic.setPlacementPoint(VG::Point(44, 55));
@@ -30,7 +30,7 @@ TEST(setPlacementPoint, PlacedGraphic)
     CHECK_EQUAL(expected, graphic.getPlacementPoint());
 }
 
-TEST(setGraphic, PlacedGraphic)
+TEST(getAndSetGraphic, PlacedGraphic)
 {
     Framework::PlacedGraphic pg;
     VG::HVectorGraphic vg(new VG::VectorGraphic);
@@ -48,4 +48,15 @@ TEST(equal, PlacedGraphic)
     Framework::PlacedGraphic pg2(VG::Point(2, 2), vg2);
     
     CHECK_EQUAL(false, pg1 == pg2)
+}
+
+TEST(unequal, PlacedGraphic)
+{
+    VG::HVectorGraphic vg1(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg1(VG::Point(2, 2), vg1);
+    
+    VG::HVectorGraphic vg2(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg2(VG::Point(2, 3), vg2);
+    
+    CHECK_EQUAL(true, pg1 != pg2)
 }
