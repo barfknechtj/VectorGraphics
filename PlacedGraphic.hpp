@@ -21,6 +21,7 @@ namespace Framework
     class PlacedGraphic
     {
     public:
+        //TODO: add functions for rule of five
         PlacedGraphic();
         PlacedGraphic(const Point& point,
                       const HVectorGraphic& hVectorGraphic);

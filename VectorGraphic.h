@@ -10,8 +10,11 @@ namespace VG
     class VectorGraphic
     {
     public:
+        // TODO: add functions for rule of five
         VectorGraphic();
+        VectorGraphic(VectorGraphic&& rhs);
         
+        // TODO: add templated addPoint
         void addPoint(const Point& p);
         void removePoint(const Point& p);
         void erasePoint(int index);
@@ -37,4 +40,5 @@ namespace VG
         enum class ShapeStyle { Open, Closed } myShapeStyle;
     };
     
+    using HVectorGraphic = std::shared_ptr<VectorGraphic>;
 }
