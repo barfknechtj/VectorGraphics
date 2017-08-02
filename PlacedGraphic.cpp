@@ -9,11 +9,6 @@
 #include "PlacedGraphic.hpp"
 
 
-Framework::PlacedGraphic::PlacedGraphic()
-    : placementPoint(Point())
-{
-}
-
 Framework::PlacedGraphic::PlacedGraphic(const Point& point,
                                         const HVectorGraphic& hVectorGraphic)
     : placementPoint(point), hGraphic(hVectorGraphic)

@@ -21,10 +21,14 @@ namespace Framework
     class PlacedGraphic
     {
     public:
-        //TODO: add functions for rule of five
-        PlacedGraphic();
+        PlacedGraphic() = default;
         PlacedGraphic(const Point& point,
                       const HVectorGraphic& hVectorGraphic);
+        PlacedGraphic(const PlacedGraphic& rhs) = default;
+        PlacedGraphic(PlacedGraphic&& rhs) = default;
+        PlacedGraphic& operator=(const PlacedGraphic& rhs) = default;
+        PlacedGraphic& operator=(PlacedGraphic&& rhs) = default;
+        ~PlacedGraphic() = default;
         
         void setPlacementPoint(Point const& placement);
         Point const& getPlacementPoint() const;

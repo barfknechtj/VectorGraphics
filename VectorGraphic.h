@@ -10,9 +10,12 @@ namespace VG
     class VectorGraphic
     {
     public:
-        // TODO: add functions for rule of five
         VectorGraphic();
-        VectorGraphic(VectorGraphic&& rhs);
+        VectorGraphic(const VectorGraphic& rhs) = default;
+        VectorGraphic(VectorGraphic&& rhs) = default;
+        VG::VectorGraphic& operator=(const VectorGraphic& rhs) = default;
+        VG::VectorGraphic& operator=(VectorGraphic&& rhs) = default;
+        ~VectorGraphic() = default;
         
         // TODO: add templated addPoint
         void addPoint(const Point& p);

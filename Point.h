@@ -7,10 +7,13 @@ namespace VG
     class Point
     {
     public:
-        
-        // TODO: add functions for rule of five
         constexpr Point() : myX{0}, myY(0) { }
         constexpr Point(int x, int y) : myX{x}, myY{y} { }
+        Point(const Point& rhs) = default;
+        Point(Point&& rhs) = default;
+        Point& operator=(const Point& rhs) = default;
+        Point& operator=(Point&& rhs) = default;
+        ~Point() = default;
         
         constexpr int getX() const { return myX; }
         constexpr int getY() const { return myY; }
