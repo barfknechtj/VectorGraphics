@@ -49,6 +49,12 @@ Layer::PlacedGraphicIterator Layer::insert(PlacedGraphicIterator it,
     return myGraphics.insert(it, placedGraphic);
 }
 
+void Layer::pushBack(const PlacedGraphic& placedGraphic)
+{
+    myGraphics.push_back(placedGraphic);
+    return;
+}
+
 Layer::PlacedGraphicIterator Layer::erase(PlacedGraphicIterator it)
 {
     return myGraphics.erase(it);
@@ -105,6 +111,12 @@ size_t Scene::size() const
 Scene::LayerIterator Scene::insert(LayerIterator it, const Layer& layer)
 {
     return myLayers.insert(it, layer);
+}
+
+void Scene::pushBack(const Layer& layer)
+{
+    myLayers.push_back(layer);
+    return;
 }
 
 Scene::LayerIterator Scene::erase(LayerIterator it)

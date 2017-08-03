@@ -42,6 +42,7 @@ namespace Framework
         
         PlacedGraphicIterator insert(PlacedGraphicIterator it,
                                      const PlacedGraphic& placedGraphic);
+        void pushBack(const PlacedGraphic& placedGraphic);
         
         PlacedGraphicIterator erase(PlacedGraphicIterator it);
         void remove(const PlacedGraphic& placedGraphic);
@@ -77,6 +78,8 @@ namespace Framework
         size_t size() const;
         
         LayerIterator insert(LayerIterator it, const Layer& layer);
+        void pushBack(const Layer& layer);
+        
         LayerIterator erase(LayerIterator it);
         void remove(const Layer& layer);
         

@@ -108,6 +108,17 @@ TEST(insert, Layer)
     CHECK_EQUAL("tree", layer.getAlias());
 }
 
+TEST(pushBack, Layer)
+{
+    Framework::Layer layer("tree");
+    VG::HVectorGraphic testGraphic(new VG::VectorGraphic());
+    auto pg = Framework::PlacedGraphic(VG::Point(1,1), testGraphic);
+    layer.pushBack(pg);
+    
+    CHECK_EQUAL(1, layer.size());
+    CHECK_EQUAL("tree", layer.getAlias());
+}
+
 TEST(erase, Layer)
 {
     Framework::Layer layer("blue");
@@ -229,6 +240,20 @@ TEST(insert, Scene)
     CHECK_EQUAL("red", alias);
 }
 
+TEST(pushBack, Scene)
+{
+    VG::HVectorGraphic testGraphic(new VG::VectorGraphic());
+    testGraphic->openShape();
+    auto pg1 = Framework::PlacedGraphic(VG::Point(11,22), testGraphic);
+    Framework::Layer layer("red");
+    layer.insert(layer.begin(), pg1);
+    Framework::Scene scene(1,1);
+    scene.pushBack(layer);
+    
+    CHECK_EQUAL(1, scene.size());
+    CHECK_EQUAL("red", scene.begin()->getAlias());
+}
+
 TEST(remove, Scene)
 {
     Framework::Layer layer1("red");
@@ -275,7 +300,7 @@ TEST(getAndSetHeight, Scene)
     CHECK_EQUAL(200, scene.getHeight());
 }
 
-/* Future Test Cases
+// use struct for matching multiple layers in testing
 struct LayerMatcher
 {
     LayerMatcher() :
@@ -317,7 +342,7 @@ private:
     bool mySkyFound;
 };
 
-TEST(pushBack, Scene)
+TEST(pushBackWithStruct, Scene)
 {
     Framework::Scene scene(800, 600);
     scene.pushBack(Framework::Layer("Mountains"));
@@ -328,7 +353,7 @@ TEST(pushBack, Scene)
     CHECK(matcher.allLayersFound());
 }
 
-TEST(remove, Scene)
+TEST(removeWithStruct, Scene)
 {
     Framework::Scene scene(800, 600);
     scene.pushBack(Framework::Layer("Mountains"));
@@ -340,4 +365,3 @@ TEST(remove, Scene)
     LayerMatcher matcher = std::for_each(scene.begin(), scene.end(), LayerMatcher());
     CHECK(matcher.onlyMountainsSkyFound());
 }
-*/
