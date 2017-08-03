@@ -33,6 +33,9 @@ namespace Framework
         Layer& operator=(Layer&& rhs) = default;
         ~Layer() = default;
         
+        bool operator==(const Layer& rhs) const;
+        bool operator!=(const Layer& rhs) const;
+        
         PlacedGraphicIterator begin();
         PlacedGraphicIterator end();
         size_t size() const;
@@ -66,7 +69,16 @@ namespace Framework
         Scene& operator=(Scene&& rhs) = default;
         ~Scene() = default;
         
-        // TODO: insert, remove, iteration support.
+        bool operator==(const Scene& rhs) const;
+        bool operator!=(const Scene& rhs) const;
+        
+        LayerIterator begin();
+        LayerIterator end();
+        size_t size() const;
+        
+        LayerIterator insert(LayerIterator it, const Layer& layer);
+        LayerIterator erase(LayerIterator it);
+        void remove(const Layer& layer);
         
         int getWidth() const;
         void setWidth(const int& width);
@@ -75,7 +87,7 @@ namespace Framework
         void setHeight(const int& height);
         
     private:
-        LayerCollection layers;
+        LayerCollection myLayers;
         int myWidth;
         int myHeight;
     };

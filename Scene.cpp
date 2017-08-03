@@ -17,6 +17,17 @@ Layer::Layer(const std::string& alias)
 {
 }
 
+bool Layer::operator==(const Layer& rhs) const
+{
+    return (myAlias == rhs.myAlias) &&
+           (myGraphics == rhs.myGraphics);
+}
+
+bool Layer::operator!=(const Layer& rhs) const
+{
+    return !(*this == rhs);
+}
+
 Layer::PlacedGraphicIterator Layer::begin()
 {
     return myGraphics.begin();
@@ -31,7 +42,6 @@ size_t Layer::size() const
 {
     return myGraphics.size();
 }
-
 
 Layer::PlacedGraphicIterator Layer::insert(PlacedGraphicIterator it,
                                            const PlacedGraphic& placedGraphic)
@@ -59,12 +69,52 @@ void Layer::setAlias(const std::string& alias)
     myAlias = alias;
 }
 
-
-
 //------------------------------------------------------------------------
 Scene::Scene(const int& width, const int& height)
     : myWidth(width), myHeight(height)
 {
+}
+
+bool Scene::operator==(const Scene& rhs) const
+{
+    return (myWidth  == rhs.myWidth)   &&
+    (myHeight == rhs.myHeight)  &&
+    (myLayers == rhs.myLayers);
+}
+
+bool Scene::operator!=(const Scene& rhs) const
+{
+    return !(*this == rhs);
+}
+
+Scene::LayerIterator Scene::begin()
+{
+    return myLayers.begin();
+}
+
+Scene::LayerIterator Scene::end()
+{
+    return myLayers.end();
+}
+
+size_t Scene::size() const
+{
+    return myLayers.size();
+}
+
+Scene::LayerIterator Scene::insert(LayerIterator it, const Layer& layer)
+{
+    return myLayers.insert(it, layer);
+}
+
+Scene::LayerIterator Scene::erase(LayerIterator it)
+{
+    return myLayers.erase(it);
+}
+
+void Scene::remove(const Layer& layer)
+{
+    myLayers.remove(layer);
 }
 
 int Scene::getWidth() const
