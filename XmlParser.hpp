@@ -14,14 +14,13 @@
 #include <map>
 #include <vector>
 
-namespace XML
+namespace Xml
 {
+    using AttributeMap = std::map<std::string, std::string>;
+    
     class Element
     {
     public:
-        using AttributeMap = std::map<std::string, std::string>;
-        using ChildElements = std::vector<Element>;
-        
         Element() = default;
         Element(const std::string& name);
         Element(const Element& rhs) = default;
@@ -44,6 +43,9 @@ namespace XML
         AttributeMap myAttributes;
         std::vector<Element> myChildElements;
     };
+    
+    using ChildElements = std::vector<Element>;
+    using HElement = std::unique_ptr<Element>;
 }
 
 #endif /* XmlParser_hpp */

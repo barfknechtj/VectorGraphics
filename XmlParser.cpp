@@ -8,42 +8,42 @@
 
 #include "XmlParser.hpp"
 
-XML::Element::Element(const std::string& name)
+Xml::Element::Element(const std::string& name)
     : myName(name)
 {
 }
 
-std::string XML::Element::getName() const
+std::string Xml::Element::getName() const
 {
     return myName;
 }
 
-std::string XML::Element::getAttribute(const std::string& key)
+std::string Xml::Element::getAttribute(const std::string& key)
 {
     return myAttributes[key];
 }
 
-std::string XML::Element::getAttribute(const std::string&& key)
+std::string Xml::Element::getAttribute(const std::string&& key)
 {
     return myAttributes[key];
 }
 
-XML::Element::AttributeMap XML::Element::getAttributes() const
+Xml::AttributeMap Xml::Element::getAttributes() const
 {
     return myAttributes;
 }
 
-std::vector<XML::Element> XML::Element::getChildElements() const
+std::vector<Xml::Element> Xml::Element::getChildElements() const
 {
     return myChildElements;
 }
 
-void XML::Element::addAttribute(std::pair<std::string, std::string> attribute)
+void Xml::Element::addAttribute(std::pair<std::string, std::string> attribute)
 {
     myAttributes.insert(attribute);
 }
 
-void XML::Element::addChildElement(const XML::Element& childElement)
+void Xml::Element::addChildElement(const Xml::Element& childElement)
 {
     myChildElements.push_back(childElement);
 }

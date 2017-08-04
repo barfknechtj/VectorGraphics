@@ -12,13 +12,13 @@
 
 TEST(getName, Element)
 {
-    XML::Element element("GRAPHIC");
+    Xml::Element element("GRAPHIC");
     CHECK_EQUAL("GRAPHIC", element.getName());
 }
 
 TEST(getAttributeRValue, Element)
 {
-    XML::Element element("GRAPHIC");
+    Xml::Element element("GRAPHIC");
     std::pair<std::string, std::string> attributeX{"x", "111"};
     std::pair<std::string, std::string> attributeY{"y", "222"};
     element.addAttribute(attributeX);
@@ -30,7 +30,7 @@ TEST(getAttributeRValue, Element)
 
 TEST(getAttributeLValue, Element)
 {
-    XML::Element element("GRAPHIC");
+    Xml::Element element("GRAPHIC");
     std::string xPoint{"x"};
     std::string yPoint{"y"};
     std::pair<std::string, std::string> attributeX{xPoint, "111"};
@@ -44,10 +44,10 @@ TEST(getAttributeLValue, Element)
 
 TEST(getAttributes, Element)
 {
-    XML::Element element("GRAPHIC");
+    Xml::Element element("GRAPHIC");
     std::pair<std::string, std::string> attributeX{"x", "111"};
     std::pair<std::string, std::string> attributeY{"y", "222"};
-    XML::Element::AttributeMap refMap{attributeX, attributeY};
+    Xml::AttributeMap refMap{attributeX, attributeY};
     element.addAttribute(attributeX);
     element.addAttribute(attributeY);
     
@@ -56,9 +56,9 @@ TEST(getAttributes, Element)
 
 TEST(getChildElements, Element)
 {
-    XML::Element parent("parent");
-    XML::Element child1("child1");
-    XML::Element child2("child2");
+    Xml::Element parent("parent");
+    Xml::Element child1("child1");
+    Xml::Element child2("child2");
     parent.addChildElement(child1);
     parent.addChildElement(child2);
     
