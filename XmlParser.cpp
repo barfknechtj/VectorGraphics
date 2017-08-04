@@ -18,12 +18,17 @@ std::string XML::Element::getName() const
     return myName;
 }
 
-std::string XML::Element::getAttribute(std::string& key)
+std::string XML::Element::getAttribute(const std::string& key)
 {
     return myAttributes[key];
 }
 
-XML::attributeMap XML::Element::getAttributes() const
+std::string XML::Element::getAttribute(const std::string&& key)
+{
+    return myAttributes[key];
+}
+
+XML::Element::AttributeMap XML::Element::getAttributes() const
 {
     return myAttributes;
 }
@@ -33,4 +38,12 @@ std::vector<XML::Element> XML::Element::getChildElements() const
     return myChildElements;
 }
 
-// TODO: addAttribute, addChildElement
+void XML::Element::addAttribute(std::pair<std::string, std::string> attribute)
+{
+    myAttributes.insert(attribute);
+}
+
+void XML::Element::addChildElement(const XML::Element& childElement)
+{
+    myChildElements.push_back(childElement);
+}

@@ -16,11 +16,12 @@
 
 namespace XML
 {
-    using attributeMap = std::map<std::string, std::string>;
-    
     class Element
     {
     public:
+        using AttributeMap = std::map<std::string, std::string>;
+        using ChildElements = std::vector<Element>;
+        
         Element() = default;
         Element(const std::string& name);
         Element(const Element& rhs) = default;
@@ -30,18 +31,19 @@ namespace XML
         ~Element() = default;
         
         std::string getName() const;
-        std::string getAttribute(std::string& key);
-        attributeMap getAttributes() const;
+        std::string getAttribute(const std::string& key);
+        std::string getAttribute(const std::string&& key);
+        AttributeMap getAttributes() const;
         std::vector<Element> getChildElements() const;
         
-        // TODO: addAttribute, addChildElement
+        void addAttribute(std::pair<std::string, std::string> attribute);
+        void addChildElement(const Element& childElement);
         
     private:
         std::string myName;
-        attributeMap myAttributes;
+        AttributeMap myAttributes;
         std::vector<Element> myChildElements;
     };
 }
-
 
 #endif /* XmlParser_hpp */
