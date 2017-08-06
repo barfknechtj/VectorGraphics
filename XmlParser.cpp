@@ -10,6 +10,7 @@
 #include "Utilities.h"
 #include <iostream>
 #include <memory>
+#include <string>
 
 
 bool getElement(std::istream& xml, std::string& name)
@@ -190,6 +191,17 @@ void Xml::Reader::processElementsUntilEndTag(std::istream& srcXml,
         {
             newEndTag = verifyEndTag(srcXml);
         }
+        // check for and remove comment lines
+        else if(srcXml.peek() == '!')
+        {
+            char c{};
+            while (c != '>')
+            {
+                srcXml.get(c);
+            }
+            
+        }
+        // process any other line type
         else
         {
             std::string elementName;

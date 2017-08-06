@@ -144,3 +144,29 @@ TEST(loadXml, XmlReader)
     CHECK_EQUAL("0", placedGraphic->getAttribute("x"));
     CHECK_EQUAL("0", placedGraphic->getAttribute("y"));
 }
+
+TEST(commentRemoval, XmlReader)
+{
+#define STR(a) #a
+    
+    const char* const SceneXml = STR(
+         <Scene width="800" height="600">
+             <Layer alias="sky">
+                 <PlacedGraphic x="0" y="0">
+                     <VectorGraphic closed="true">
+                         <Point x="1" y="2" />
+                     </VectorGraphic>
+                 </PlacedGraphic>
+             </Layer>
+            <!---COMMENT--->
+         </Scene>);
+    
+    std::stringstream xmlStream(SceneXml);
+    Xml::Reader reader;
+    
+    Xml::HElement root = reader.loadXml(xmlStream);
+    
+    CHECK_EQUAL("Scene", root->getName());
+    CHECK_EQUAL("800", root->getAttribute("width"));
+    CHECK_EQUAL("600", root->getAttribute("height"));
+}
