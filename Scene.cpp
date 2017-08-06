@@ -49,6 +49,12 @@ Layer::PlacedGraphicIterator Layer::insert(PlacedGraphicIterator it,
     return myGraphics.insert(it, placedGraphic);
 }
 
+Layer::PlacedGraphicIterator Layer::insert(PlacedGraphicIterator it,
+                                           PlacedGraphic&& placedGraphic)
+{
+    return myGraphics.insert(it, placedGraphic);
+}
+
 void Layer::pushBack(const PlacedGraphic& placedGraphic)
 {
     myGraphics.push_back(placedGraphic);
@@ -113,7 +119,18 @@ Scene::LayerIterator Scene::insert(LayerIterator it, const Layer& layer)
     return myLayers.insert(it, layer);
 }
 
+Scene::LayerIterator Scene::insert(LayerIterator it, Layer&& layer)
+{
+    return myLayers.insert(it, layer);
+}
+
 void Scene::pushBack(const Layer& layer)
+{
+    myLayers.push_back(layer);
+    return;
+}
+
+void Scene::pushBack(Layer&& layer)
 {
     myLayers.push_back(layer);
     return;

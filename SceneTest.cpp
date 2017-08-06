@@ -108,6 +108,22 @@ TEST(insert, Layer)
     CHECK_EQUAL("tree", layer.getAlias());
 }
 
+TEST(insertRValue, Layer)
+{
+    Framework::Layer layer("tree");
+    VG::VectorGraphic vg;
+    vg.addPoint(VG::Point(100,100));
+    VG::HVectorGraphic testGraphic = std::make_shared<VG::VectorGraphic>(vg);
+    auto pg = Framework::PlacedGraphic(VG::Point(1,1), testGraphic);
+    auto it1 = layer.insert(layer.begin(), std::move(pg));
+    
+    CHECK_EQUAL(true, *(layer.begin()) == *it1);
+    CHECK_EQUAL(1, layer.size());
+    CHECK_EQUAL(1, layer.begin()->getPlacementPoint().getX());
+    CHECK_EQUAL(1, layer.begin()->getPlacementPoint().getY());
+    CHECK_EQUAL("tree", layer.getAlias());
+}
+
 TEST(pushBack, Layer)
 {
     Framework::Layer layer("tree");
@@ -239,6 +255,26 @@ TEST(insert, Scene)
     CHECK_EQUAL(1, scene.size());
     CHECK_EQUAL("red", alias);
 }
+
+TEST(insertRValue, Scene)
+{
+    Framework::Layer layer("tree");
+    VG::VectorGraphic vg;
+    vg.addPoint(VG::Point(100,100));
+    VG::HVectorGraphic testGraphic = std::make_shared<VG::VectorGraphic>(vg);
+    auto pg = Framework::PlacedGraphic(VG::Point(1,1), testGraphic);
+    layer.insert(layer.begin(), std::move(pg));
+    
+    Framework::Scene scene;
+    auto it1 = scene.insert(scene.begin(), std::move(layer));
+    
+    CHECK_EQUAL(true, *(scene.begin()) == *it1);
+    CHECK_EQUAL(1, scene.size());
+    CHECK_EQUAL(1, scene.begin()->begin()->getPlacementPoint().getX());
+    CHECK_EQUAL(1, scene.begin()->begin()->getPlacementPoint().getY());
+    CHECK_EQUAL("tree", scene.begin()->getAlias());
+}
+
 
 TEST(pushBack, Scene)
 {

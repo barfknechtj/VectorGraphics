@@ -26,6 +26,7 @@ namespace Framework
     public:
         typedef PlacedGraphicCollection::iterator PlacedGraphicIterator;
         
+        Layer() = default;
         Layer(const std::string& alias);
         Layer(const Layer& rhs) = default;
         Layer(Layer&& rhs) = default;
@@ -42,7 +43,10 @@ namespace Framework
         
         PlacedGraphicIterator insert(PlacedGraphicIterator it,
                                      const PlacedGraphic& placedGraphic);
+        PlacedGraphicIterator insert(PlacedGraphicIterator it,
+                                     PlacedGraphic&& placedGraphic);
         void pushBack(const PlacedGraphic& placedGraphic);
+        void pushBack(PlacedGraphic&& placedGraphic);
         
         PlacedGraphicIterator erase(PlacedGraphicIterator it);
         void remove(const PlacedGraphic& placedGraphic);
@@ -63,6 +67,7 @@ namespace Framework
     public:
         typedef LayerCollection::iterator LayerIterator;
         
+        Scene() = default;
         Scene(const int& width, const int& height);
         Scene(const Scene& rhs) = default;
         Scene(Scene&& rhs) = default;
@@ -78,7 +83,9 @@ namespace Framework
         size_t size() const;
         
         LayerIterator insert(LayerIterator it, const Layer& layer);
+        LayerIterator insert(LayerIterator it, Layer&& layer);
         void pushBack(const Layer& layer);
+        void pushBack(Layer&& layer);
         
         LayerIterator erase(LayerIterator it);
         void remove(const Layer& layer);
