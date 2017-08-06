@@ -134,6 +134,11 @@ std::shared_ptr<Xml::Element> Xml::Element::addChildElement(std::string childEle
     return childElement;
 }
 
+bool Xml::Element::hasChildren() const
+{
+    return !(myChildElements.empty());
+}
+
 //------------------------------------------------------------------------
 void Xml::Reader::_pushElementTagToStack(const std::string& elementName)
 {
@@ -276,5 +281,56 @@ std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml)
     }
     
     return root;
+}
+
+//------------------------------------------------------------------------
+std::ostream& Xml::Writer::writeXml(Xml::HElement element, std::ostream& os)
+{
+    os << "<";
+    writeName(element, os);
+    writeAttributes(element, os);
+    
+    if(element->hasChildren())
+    {
+        os << ">\n";
+        for (auto childElement : element->getChildElements())
+        {
+            writeXml(childElement, os);
+        }
+        writeNewLineEndTag(element, os);
+    }
+    else
+    {
+        os << "/>\n";
+    }
+        
+    return os;
+}
+
+std::ostream& Xml::Writer::writeName(Xml::HElement element, std::ostream& os)
+{
+    os << element->getName();
+    return os;
+}
+
+std::ostream& Xml::Writer::writeAttributes(Xml::HElement element, std::ostream& os)
+{
+    auto attributes = element->getAttributes();
+    std::map<std::string, std::string>::iterator it;
+    
+    for (it = attributes.begin(); it != attributes.end(); ++it)
+    {
+        os << " " << it->first << "=\"" << it->second << "\"";
+    }
+    
+    return os;
+}
+
+std::ostream& Xml::Writer::writeNewLineEndTag(Xml::HElement element, std::ostream& os)
+{
+    os << "</";
+    writeName(element, os);
+    os << ">\n";
+    return os;
 }
 

@@ -41,6 +41,7 @@ namespace Xml
         std::string getAttribute(const std::string&& key) const;
         AttributeMap const& getAttributes() const;
         std::vector<std::shared_ptr<Element>> const& getChildElements() const;
+        bool hasChildren() const;
         
         void setName(const std::string& name);
         void addAttribute(std::string key, std::string value);
@@ -78,6 +79,16 @@ namespace Xml
     
     class Writer
     {
+    public:
+        Writer() = default;
+        ~Writer() = default;
+        
+        std::ostream& writeXml(Xml::HElement element, std::ostream& os);
+        
+        std::ostream& writeName(Xml::HElement element, std::ostream& os);
+        std::ostream& writeAttributes(Xml::HElement element, std::ostream& os);
+        std::ostream& writeChildElements(Xml::HElement element, std::ostream& os);
+        std::ostream& writeNewLineEndTag(Xml::HElement element, std::ostream& os);
         
     };
     

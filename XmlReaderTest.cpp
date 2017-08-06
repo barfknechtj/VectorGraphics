@@ -65,6 +65,16 @@ TEST(getChildElements, Element)
     CHECK_EQUAL("child2", parent.getChildElements()[1]->getName());
 }
 
+TEST(hasChildren, Element)
+{
+    Xml::Element element("parent");
+    
+    CHECK_EQUAL(false, element.hasChildren());
+    
+    element.addChildElement("child1");
+    CHECK_EQUAL(true, element.hasChildren());
+}
+
 //------------------------------------------------------------------------
 #define STR(a) #a
 
