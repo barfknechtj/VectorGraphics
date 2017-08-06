@@ -190,6 +190,7 @@ void Xml::Reader::processElementsUntilEndTag(std::istream& srcXml,
         if(srcXml.peek() == '/')
         {
             newEndTag = verifyEndTag(srcXml);
+            Parse::eat(srcXml, " \n\t\r><");
         }
         // check for and remove comment lines
         else if(srcXml.peek() == '!')
@@ -199,6 +200,7 @@ void Xml::Reader::processElementsUntilEndTag(std::istream& srcXml,
             {
                 srcXml.get(c);
             }
+            Parse::eat(srcXml, " \n\t\r><");
             
         }
         // process any other line type
