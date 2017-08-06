@@ -10,5 +10,17 @@
 #define SceneReader_hpp
 
 #include <stdio.h>
+#include "Scene.hpp"
+#include "XmlParser.hpp"
+#include "VectorGraphic.h"
 
+namespace Framework
+{
+    class SceneReader
+    {
+    public:
+        static Framework::Scene readScene(Xml::Element element);
+    };
+}
+    
 #endif /* SceneReader_hpp */
