@@ -13,6 +13,13 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "VectorGraphic.h"
+#include "Parse.h"
+#include <iostream>
+#include <stack>
+
+bool getElement(std::istream& xml, std::string& name);
+bool getAttribute(std::istream& xml, std::string& name, std::string& value);
 
 namespace Xml
 {
@@ -29,23 +36,45 @@ namespace Xml
         Element& operator=(Element&& rhs) = default;
         ~Element() = default;
         
-        std::string getName() const;
-        std::string getAttribute(const std::string& key);
-        std::string getAttribute(const std::string&& key);
-        AttributeMap getAttributes() const;
-        std::vector<Element> getChildElements() const;
+        std::string const& getName() const;
+        std::string getAttribute(const std::string& key) const;
+        std::string getAttribute(const std::string&& key) const;
+        AttributeMap const& getAttributes() const;
+        std::vector<std::shared_ptr<Element>> const& getChildElements() const;
         
-        void addAttribute(std::pair<std::string, std::string> attribute);
-        void addChildElement(const Element& childElement);
+        void setName(const std::string& name);
+        void addAttribute(std::string key, std::string value);
+        std::shared_ptr<Element> addChildElement(std::string childElementName);
         
     private:
         std::string myName;
         AttributeMap myAttributes;
-        std::vector<Element> myChildElements;
+        std::vector<std::shared_ptr<Element>> myChildElements;
     };
     
-    using ChildElements = std::vector<Element>;
-    using HElement = std::unique_ptr<Element>;
+    using ChildElements = std::vector<std::shared_ptr<Element>>;
+    using HElement = std::shared_ptr<Element>;
+    
+    class Reader
+    {
+    public:
+        Reader() = default;
+        ~Reader() = default;
+        
+        void pushElementTagToStack(const std::string& elementName);
+        void popElementTagFromStack();
+        bool checkForEndTag(std::istream& xml);
+        bool checkForSingleLineEndTag(std::istream& xml);
+        std::string verifyEndTag(std::istream& xml);
+        void processElementsUntilEndTag(std::istream& srcXml,
+                                        std::shared_ptr<Element> parentElement,
+                                        std::string& endTag);
+        std::shared_ptr<Element> loadXml(std::istream& srcXml);
+        
+    private:
+        std::stack<std::string> myElementStack;
+    };
+    
 }
 
 #endif /* XmlParser_hpp */

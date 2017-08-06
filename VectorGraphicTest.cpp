@@ -1,6 +1,6 @@
 #include "Parse.h"
 #include "VectorGraphic.h"
-#include "VectorGraphicStreamer.h"
+#include "Utilities.h"
 #include "TestHarness.h"
 
 TEST(ctor, VectorGraphic)
