@@ -135,27 +135,27 @@ std::shared_ptr<Xml::Element> Xml::Element::addChildElement(std::string childEle
 }
 
 //------------------------------------------------------------------------
-void Xml::Reader::pushElementTagToStack(const std::string& elementName)
+void Xml::Reader::_pushElementTagToStack(const std::string& elementName)
 {
     myElementStack.push(elementName);
 }
 
-void Xml::Reader::popElementTagFromStack()
+void Xml::Reader::_popElementTagFromStack()
 {
     myElementStack.pop();
 }
 
-bool Xml::Reader::checkForEndTag(std::istream& xml)
+bool Xml::Reader::_checkForEndTag(std::istream& xml)
 {
     return (xml.peek() == '/');
 }
 
-bool Xml::Reader::checkForSingleLineEndTag(std::istream& xml)
+bool Xml::Reader::_checkForSingleLineEndTag(std::istream& xml)
 {
     return (xml.peek() == '/');
 }
 
-std::string Xml::Reader::verifyEndTag(std::istream& xml)
+std::string Xml::Reader::_verifyEndTag(std::istream& xml)
 {
     std::string endTag;
     char c{};
@@ -168,11 +168,11 @@ std::string Xml::Reader::verifyEndTag(std::istream& xml)
     }
     
     Parse::trim(endTag);
-    popElementTagFromStack();
+    _popElementTagFromStack();
     return endTag;
 }
 
-void Xml::Reader::processElementsUntilEndTag(std::istream& srcXml,
+void Xml::Reader::_processElementsUntilEndTag(std::istream& srcXml,
                                              std::shared_ptr<Element> parentElement,
                                              std::string& endTagOnStack)
 {
@@ -189,7 +189,7 @@ void Xml::Reader::processElementsUntilEndTag(std::istream& srcXml,
         Parse::eat(srcXml, " <");
         if(srcXml.peek() == '/')
         {
-            newEndTag = verifyEndTag(srcXml);
+            newEndTag = _verifyEndTag(srcXml);
             Parse::eat(srcXml, " \n\t\r><");
         }
         // check for and remove comment lines
@@ -213,7 +213,7 @@ void Xml::Reader::processElementsUntilEndTag(std::istream& srcXml,
             Parse::eat(srcXml);
             if(getElement(srcXml, elementName))
             {
-                pushElementTagToStack(elementName);
+                _pushElementTagToStack(elementName);
                 auto childElement = parentElement->addChildElement(elementName);
                 while(getAttribute(srcXml, attributeName, value))
                 {
@@ -224,14 +224,14 @@ void Xml::Reader::processElementsUntilEndTag(std::istream& srcXml,
                 if(srcXml.peek() == '/')
                 {
                     Parse::eat(srcXml, " \n\t\r/>");
-                    popElementTagFromStack();
+                    _popElementTagFromStack();
                 }
                 
                 // check for nested elements
                 else
                 {
                     Parse::eat(srcXml, " \n\t\r/>");
-                    processElementsUntilEndTag(srcXml, childElement, myElementStack.top());
+                    _processElementsUntilEndTag(srcXml, childElement, myElementStack.top());
                 }
             }
         }
@@ -251,7 +251,7 @@ std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml)
     if(getElement(srcXml, elementName))
     {
         root->setName(elementName);
-        pushElementTagToStack(elementName);
+        _pushElementTagToStack(elementName);
     }
     
     while(getAttribute(srcXml, attributeName, value))
@@ -261,12 +261,12 @@ std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml)
     
     if(srcXml.peek() == '/')
     {
-       popElementTagFromStack();
+       _popElementTagFromStack();
     }
     else
     {
         Parse::eat(srcXml, " \n\t\r/>");
-        processElementsUntilEndTag(srcXml, root, elementName);
+        _processElementsUntilEndTag(srcXml, root, elementName);
     }
     
     // all end tags should be popped

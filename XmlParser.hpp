@@ -61,18 +61,24 @@ namespace Xml
         Reader() = default;
         ~Reader() = default;
         
-        void pushElementTagToStack(const std::string& elementName);
-        void popElementTagFromStack();
-        bool checkForEndTag(std::istream& xml);
-        bool checkForSingleLineEndTag(std::istream& xml);
-        std::string verifyEndTag(std::istream& xml);
-        void processElementsUntilEndTag(std::istream& srcXml,
-                                        std::shared_ptr<Element> parentElement,
-                                        std::string& endTag);
         std::shared_ptr<Element> loadXml(std::istream& srcXml);
         
     private:
         std::stack<std::string> myElementStack;
+        
+        void _pushElementTagToStack(const std::string& elementName);
+        void _popElementTagFromStack();
+        bool _checkForEndTag(std::istream& xml);
+        bool _checkForSingleLineEndTag(std::istream& xml);
+        std::string _verifyEndTag(std::istream& xml);
+        void _processElementsUntilEndTag(std::istream& srcXml,
+                                        std::shared_ptr<Element> parentElement,
+                                        std::string& endTag);
+    };
+    
+    class Writer
+    {
+        
     };
     
 }
