@@ -31,9 +31,11 @@ namespace Framework
         ~PlacedGraphic() = default;
         
         void setPlacementPoint(Point const& placement);
+        void setPlacementPoint(Point&& placement);
         Point const& getPlacementPoint() const;
         
         void setGraphic(HVectorGraphic const& graphic);
+        void moveGraphic(HVectorGraphic& graphic);
         HVectorGraphic const& getGraphic() const;
         
         bool operator==(const PlacedGraphic& rhs) const;

@@ -20,6 +20,11 @@ void Framework::PlacedGraphic::setPlacementPoint(Point const& placement)
     placementPoint = placement;
 }
 
+void Framework::PlacedGraphic::setPlacementPoint(Point&& placement)
+{
+    placementPoint = std::move(placement);
+}
+
 VG::Point const& Framework::PlacedGraphic::getPlacementPoint() const
 {
     return placementPoint;
@@ -28,6 +33,11 @@ VG::Point const& Framework::PlacedGraphic::getPlacementPoint() const
 void Framework::PlacedGraphic::setGraphic(HVectorGraphic const& graphic)
 {
     hGraphic = graphic;
+}
+
+void Framework::PlacedGraphic::moveGraphic(HVectorGraphic& graphic)
+{
+    hGraphic = std::move(graphic);
 }
 
 VG::HVectorGraphic const& Framework::PlacedGraphic::getGraphic() const

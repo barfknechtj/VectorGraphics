@@ -39,6 +39,21 @@ TEST(getAndSetGraphic, PlacedGraphic)
     CHECK_EQUAL(vg, pg.getGraphic());
 }
 
+TEST(getAndSetRGraphic, PlacedGraphic)
+{
+    
+    VG::VectorGraphic vg;
+    vg.addPoint(VG::Point(100,100));
+    
+    Framework::PlacedGraphic pg;
+    VG::HVectorGraphic hvg = std::make_shared<VG::VectorGraphic>(vg);
+    pg.moveGraphic(hvg);
+    
+    CHECK_EQUAL(true,
+                VG::Point(100,100) == pg.getGraphic()->getPoint(0));
+    CHECK_EQUAL(true, hvg == NULL);
+}
+
 TEST(equal, PlacedGraphic)
 {
     VG::HVectorGraphic vg1(new VG::VectorGraphic);
