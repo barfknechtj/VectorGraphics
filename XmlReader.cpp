@@ -1,90 +1,12 @@
 //
-//  XmlParser.cpp
+//  XmlReader.cpp
 //  Assignment2
 //
-//  Created by Jared Barfknecht on 8/2/17.
+//  Created by Jared Barfknecht on 8/6/17.
 //  Copyright © 2017 Jared Barfknecht. All rights reserved.
 //
 
-#include "XmlParser.hpp"
-#include "Utilities.h"
-#include <iostream>
-#include <memory>
-#include <string>
-
-
-bool getElement(std::istream& xml, std::string& name)
-{
-    char c{};
-    if (xml.peek() == EOF)
-    {
-        return false;
-    }
-    
-    name.clear();
-    Parse::eat(xml);
-    while (xml.get(c))
-    {
-        // whitespace delimits the element name
-        if (isspace(c))
-        {
-            break;
-        }
-        
-        if (c == '>')
-        {
-            xml.unget();
-            break;
-        }
-        
-        name.push_back(c);
-    }
-    
-    Parse::trim(name);
-    return true;
-}
-
-bool getAttribute(std::istream& xml, std::string& name, std::string& value)
-{
-    Parse::eat(xml);
-    
-    // Return false if no more attributes in the current element
-    if (xml.peek() == '/' || xml.peek() == '>')
-    {
-        return false;
-    }
-    
-    // Extract the next attribute name
-    name.clear();
-    char c{};
-    while (xml.get(c))
-    {
-        if (c == '=')
-        {
-            break;
-        }
-        
-        name.push_back(c);
-    }
-    Parse::trim(name);
-    
-    // Extract the next attribute value. Values are delimited
-    // by quotes (single or double)
-    value.clear();
-    Parse::eat(xml);
-    Parse::eat(xml, "\'\"");
-    while (xml.get(c))
-    {
-        if (c == '\"' || c == '\'')
-        {
-            break;
-        }
-        
-        value.push_back(c);
-    }
-    
-    return true;
-}
+#include "XmlReader.hpp"
 
 //------------------------------------------------------------------------
 void Xml::Reader::_pushElementTagToStack(const std::string& elementName)
@@ -125,11 +47,11 @@ std::string Xml::Reader::_verifyEndTag(std::istream& xml)
 }
 
 void Xml::Reader::_processElementsUntilEndTag(std::istream& srcXml,
-                                             std::shared_ptr<Element> parentElement,
-                                             std::string& endTagOnStack)
+                                              std::shared_ptr<Element> parentElement,
+                                              std::string& endTagOnStack)
 {
     std::string newEndTag;
-
+    
     while(endTagOnStack != newEndTag)
     {
         if (srcXml.peek() == EOF)
@@ -213,7 +135,7 @@ std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml)
     
     if(srcXml.peek() == '/')
     {
-       _popElementTagFromStack();
+        _popElementTagFromStack();
     }
     else
     {
@@ -229,55 +151,3 @@ std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml)
     
     return root;
 }
-
-//------------------------------------------------------------------------
-std::ostream& Xml::Writer::writeXml(Xml::HElement element, std::ostream& os)
-{
-    os << "<";
-    writeName(element, os);
-    writeAttributes(element, os);
-    
-    if(element->hasChildren())
-    {
-        os << ">\n";
-        for (auto childElement : element->getChildElements())
-        {
-            writeXml(childElement, os);
-        }
-        writeNewLineEndTag(element, os);
-    }
-    else
-    {
-        os << "/>\n";
-    }
-        
-    return os;
-}
-
-std::ostream& Xml::Writer::writeName(Xml::HElement element, std::ostream& os)
-{
-    os << element->getName();
-    return os;
-}
-
-std::ostream& Xml::Writer::writeAttributes(Xml::HElement element, std::ostream& os)
-{
-    auto attributes = element->getAttributes();
-    std::map<std::string, std::string>::iterator it;
-    
-    for (it = attributes.begin(); it != attributes.end(); ++it)
-    {
-        os << " " << it->first << "=\"" << it->second << "\"";
-    }
-    
-    return os;
-}
-
-std::ostream& Xml::Writer::writeNewLineEndTag(Xml::HElement element, std::ostream& os)
-{
-    os << "</";
-    writeName(element, os);
-    os << ">\n";
-    return os;
-}
-

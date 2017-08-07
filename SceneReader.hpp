@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "Scene.hpp"
-#include "XmlParser.hpp"
+#include "XmlParse.hpp"
 #include "VectorGraphic.h"
 
 namespace Framework

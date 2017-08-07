@@ -8,10 +8,11 @@
 
 #include <stdio.h>
 
-#include "XmlParser.hpp"
+#include "XmlParse.hpp"
 #include "Scene.hpp"
 #include "SceneReader.hpp"
 #include "TestHarness.h"
+#include "XmlReader.hpp"
 
 const std::string TestXml = R"(
 <Scene width="800" height="600">

@@ -8,7 +8,9 @@
 
 #include <stdio.h>
 #include "TestHarness.h"
-#include "XmlParser.hpp"
+#include "XmlParse.hpp"
+#include "XmlWriter.hpp"
+#include "XmlReader.hpp"
 
 TEST(writeName, XmlWriter)
 {

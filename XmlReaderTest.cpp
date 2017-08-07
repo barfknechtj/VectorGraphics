@@ -8,8 +8,9 @@
 
 #include <stdio.h>
 #include "TestHarness.h"
-#include "XmlParser.hpp"
+#include "XmlParse.hpp"
 #include "Utilities.h"
+#include "XmlReader.hpp"
 
 TEST(getName, Element)
 {

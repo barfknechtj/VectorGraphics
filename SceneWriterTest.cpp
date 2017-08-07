@@ -8,11 +8,12 @@
 
 #include <stdio.h>
 
-#include "XmlParser.hpp"
+#include "XmlParse.hpp"
 #include "Scene.hpp"
 #include "SceneReader.hpp"
 #include "SceneWriter.hpp"
 #include "TestHarness.h"
+#include "XmlReader.hpp"
 
 #define STR(a) #a
 

@@ -10,7 +10,7 @@
 #define SceneWriter_hpp
 
 #include <stdio.h>
-#include "XmlParser.hpp"
+#include "XmlParse.hpp"
 #include "Scene.hpp"
 #include "Utilities.h"
 
