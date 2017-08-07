@@ -26,7 +26,7 @@ namespace Xml
         Reader() = default;
         ~Reader() = default;
         
-        std::shared_ptr<Element> loadXml(std::istream& srcXml);
+        std::shared_ptr<Element> loadXml(std::istream& srcXml)  throw (InvalidXmlSyntax);
         
     private:
         std::stack<std::string> myElementStack;
@@ -36,7 +36,7 @@ namespace Xml
         std::string _verifyEndTag(std::istream& xml);
         void _processElementsUntilEndTag(std::istream& srcXml,
                                          std::shared_ptr<Element> parentElement,
-                                         std::string& endTag);
+                                         std::string& endTag) throw (InvalidXmlSyntax);
     };
 }
 

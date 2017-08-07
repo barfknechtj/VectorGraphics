@@ -37,7 +37,7 @@ std::string Xml::Reader::_verifyEndTag(std::istream& xml)
 
 void Xml::Reader::_processElementsUntilEndTag(std::istream& srcXml,
                                               std::shared_ptr<Element> parentElement,
-                                              std::string& endTagOnStack)
+                                              std::string& endTagOnStack)  throw (InvalidXmlSyntax)
 {
     std::string newEndTag;
     
@@ -102,7 +102,7 @@ void Xml::Reader::_processElementsUntilEndTag(std::istream& srcXml,
 }
 
 // assumes there is only one root element in Xml
-std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml)
+std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml) throw (InvalidXmlSyntax)
 {
     std::shared_ptr<Xml::Element> root{new Element};
     std::string elementName;

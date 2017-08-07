@@ -24,21 +24,20 @@ bool getAttribute(std::istream& xml, std::string& name, std::string& value);
 class InvalidXmlSyntax : public std::exception
 {
 public:
-//    InvalidXmlSyntax() {};
     virtual const char* what() = 0;
 };
 
 class UnexpectedEOF : public InvalidXmlSyntax
 {
 public:
-//    UnexpectedEOF() {};
+    UnexpectedEOF() = default;
     const char* what();
 };
 
 class InvalidXmlEndTag : public InvalidXmlSyntax
 {
 public:
-//    InvalidXmlEndTag() {};
+    InvalidXmlEndTag() = default;
     const char* what();
 };
 
