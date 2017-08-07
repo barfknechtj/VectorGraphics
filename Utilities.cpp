@@ -1,16 +1,11 @@
 #include "Utilities.h"
-#include "Parse.h"
-#include "Point.h"
-#include <iostream>
-#include <sstream>
 
-namespace
+std::string boolToStr(bool& b)
 {
-    int toInt(const std::string& value)
-    {
-        int v{};
-        std::stringstream ss(value);
-        ss >> v;
-        return v;
-    }
+    return b ? "true" : "false";
+}
+
+std::string boolToStr(bool&& b)
+{
+    return b ? "true" : "false";
 }
