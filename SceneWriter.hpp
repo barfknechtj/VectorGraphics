@@ -19,8 +19,6 @@ namespace Framework
     class SceneWriter
     {
     public:
-        SceneWriter();
-        ~SceneWriter();
         
         static Xml::HElement writeScene(Framework::Scene& scene);
     };

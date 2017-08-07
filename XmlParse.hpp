@@ -17,8 +17,29 @@
 #include "Parse.h"
 #include "Element.hpp"
 
-
 bool getElement(std::istream& xml, std::string& name);
 bool getAttribute(std::istream& xml, std::string& name, std::string& value);
+
+//------------------------------------------------------------------------
+class InvalidXmlSyntax : public std::exception
+{
+public:
+//    InvalidXmlSyntax() {};
+    virtual const char* what() = 0;
+};
+
+class UnexpectedEOF : public InvalidXmlSyntax
+{
+public:
+//    UnexpectedEOF() {};
+    const char* what();
+};
+
+class InvalidXmlEndTag : public InvalidXmlSyntax
+{
+public:
+//    InvalidXmlEndTag() {};
+    const char* what();
+};
 
 #endif /* XmlParser_hpp */

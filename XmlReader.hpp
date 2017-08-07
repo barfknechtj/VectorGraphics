@@ -33,8 +33,6 @@ namespace Xml
         
         void _pushElementTagToStack(const std::string& elementName);
         void _popElementTagFromStack();
-        bool _checkForEndTag(std::istream& xml);
-        bool _checkForSingleLineEndTag(std::istream& xml);
         std::string _verifyEndTag(std::istream& xml);
         void _processElementsUntilEndTag(std::istream& srcXml,
                                          std::shared_ptr<Element> parentElement,

@@ -8,7 +8,6 @@
 
 #include "XmlWriter.hpp"
 
-//------------------------------------------------------------------------
 std::ostream& Xml::Writer::writeXml(Xml::HElement element, std::ostream& os)
 {
     os << "<";

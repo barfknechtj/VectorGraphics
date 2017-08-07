@@ -8,7 +8,6 @@
 
 #include "XmlReader.hpp"
 
-//------------------------------------------------------------------------
 void Xml::Reader::_pushElementTagToStack(const std::string& elementName)
 {
     myElementStack.push(elementName);
@@ -17,16 +16,6 @@ void Xml::Reader::_pushElementTagToStack(const std::string& elementName)
 void Xml::Reader::_popElementTagFromStack()
 {
     myElementStack.pop();
-}
-
-bool Xml::Reader::_checkForEndTag(std::istream& xml)
-{
-    return (xml.peek() == '/');
-}
-
-bool Xml::Reader::_checkForSingleLineEndTag(std::istream& xml)
-{
-    return (xml.peek() == '/');
 }
 
 std::string Xml::Reader::_verifyEndTag(std::istream& xml)
@@ -56,7 +45,7 @@ void Xml::Reader::_processElementsUntilEndTag(std::istream& srcXml,
     {
         if (srcXml.peek() == EOF)
         {
-            throw std::runtime_error{"Invalid XML: Missing end tag"};
+            throw UnexpectedEOF();
         }
         
         // check for and verify endTag on new line
@@ -146,7 +135,7 @@ std::shared_ptr<Xml::Element> Xml::Reader::loadXml(std::istream& srcXml)
     // all end tags should be popped
     if(myElementStack.size())
     {
-        throw std::runtime_error{"Invalid XML: Incorrect number of end tags"};
+        throw InvalidXmlEndTag();
     }
     
     return root;

@@ -86,6 +86,17 @@ bool getAttribute(std::istream& xml, std::string& name, std::string& value)
     return true;
 }
 
+//------------------------------------------------------------------------
+const char* UnexpectedEOF::what()
+{
+    return "Invalid XML: An unexpected End-of-File was encountered";
+}
+
+const char* InvalidXmlEndTag::what()
+{
+    return "Required Xml element end tag is invalid or missing";
+}
+
 
 
 

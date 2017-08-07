@@ -34,9 +34,6 @@ namespace Framework
         Layer& operator=(Layer&& rhs) = default;
         ~Layer() = default;
         
-        bool operator==(const Layer& rhs) const;
-        bool operator!=(const Layer& rhs) const;
-        
         PlacedGraphicIterator begin();
         PlacedGraphicIterator end();
         size_t size() const;
@@ -53,6 +50,9 @@ namespace Framework
         
         std::string getAlias() const;
         void setAlias(const std::string& alias);
+        
+        bool operator==(const Layer& rhs) const;
+        bool operator!=(const Layer& rhs) const;
         
     private:
         PlacedGraphicCollection myGraphics;

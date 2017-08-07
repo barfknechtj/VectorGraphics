@@ -181,3 +181,42 @@ TEST(commentRemoval, XmlReader)
     CHECK_EQUAL("800", root->getAttribute("width"));
     CHECK_EQUAL("600", root->getAttribute("height"));
 }
+
+TEST(invalidSingleLineXml, XmlReader)
+{
+#define REF(c) #c
+    
+    const char* const xmlScene = REF(<Scene width="800" height="600">);
+    
+    Xml::Reader reader;
+    std::stringstream xmlStream(xmlScene);
+    try
+    {
+        Xml::HElement root = reader.loadXml(xmlStream);
+    }
+    catch (UnexpectedEOF& exception)
+    {
+        CHECK(true);
+        CHECK_EQUAL("Invalid XML: An unexpected End-of-File was encountered", exception.what());
+    }
+}
+
+TEST(invalidLineXml, XmlReader)
+{
+#define REF(c) #c
+    
+    const char* const xmlScene = REF(<Scene width="800" height="600">
+                                     <Layer/>);
+    
+    Xml::Reader reader;
+    std::stringstream xmlStream(xmlScene);
+    try
+    {
+        Xml::HElement root = reader.loadXml(xmlStream);
+    }
+    catch (UnexpectedEOF& exception)
+    {
+        CHECK(true);
+        CHECK_EQUAL("Invalid XML: An unexpected End-of-File was encountered", exception.what());
+    }
+}
