@@ -17,7 +17,6 @@ namespace VG
         VG::VectorGraphic& operator=(VectorGraphic&& rhs) = default;
         ~VectorGraphic() = default;
         
-        // TODO: add templated addPoint
         void addPoint(const Point& p);
         void removePoint(const Point& p);
         void erasePoint(int index);

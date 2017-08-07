@@ -94,7 +94,6 @@ const char* const xmlScene = STR(
 TEST(writeXml, XmlWriter)
 {
     Xml::Reader reader;
-    Xml::Writer writer;
     std::stringstream xmlStream(xmlScene);
     Xml::HElement root = reader.loadXml(xmlStream);
 //    writer.writeXml(root, std::cout);
