@@ -8,7 +8,7 @@
 
 #include "SceneReader.hpp"
 
-Framework::Scene Framework::SceneReader::readScene(Xml::Element sceneElement)
+Framework::Scene Framework::SceneReader::readScene(const Xml::Element& sceneElement)
 {
     Scene scene;
     scene.setHeight(std::stoi(sceneElement.getAttribute("height")));

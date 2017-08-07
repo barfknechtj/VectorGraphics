@@ -19,7 +19,7 @@ namespace Framework
     class SceneReader
     {
     public:
-        static Framework::Scene readScene(Xml::Element element);
+        static Framework::Scene readScene(const Xml::Element& element);
     };
 }
     
