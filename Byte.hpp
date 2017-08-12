@@ -17,8 +17,16 @@ namespace Binary
     class Byte
     {
     public:
+        Byte() = default;
+        ~Byte() = default;
+        
+        Byte(std::initializer_list<char>);
         
         static unsigned char read(std::istream& is);
+        void write(std::ostream& os);
+        
+    private:
+        unsigned char byteData;
     };
 }
 

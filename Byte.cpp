@@ -12,7 +12,17 @@ unsigned char Binary::Byte::read(std::istream& is)
 {
     char temp;
     is.get(temp);
-    unsigned char byteData = static_cast<unsigned char>(temp);
+    unsigned char byte = static_cast<unsigned char>(temp);
     
-    return byteData;
+    return byte;
+}
+
+Binary::Byte::Byte(std::initializer_list<char> c)
+{
+    byteData = static_cast<unsigned char>(*c.begin());
+}
+
+void Binary::Byte::write(std::ostream& os)
+{
+    os.put(static_cast<char>(byteData));
 }

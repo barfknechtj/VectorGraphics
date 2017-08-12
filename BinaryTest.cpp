@@ -27,7 +27,7 @@ TEST(readByte, Byte)
     b = Binary::Byte::read(ss);
     CHECK_EQUAL('c', b);
 }
-/*
+
 TEST(writeByte, Byte)
 {
     Binary::Byte b{'x'};
@@ -37,7 +37,7 @@ TEST(writeByte, Byte)
     
     CHECK_EQUAL("x", ss.str());
 }
-
+/*
 TEST(assign, Byte)
 {
     unsigned char c1{'a'};
