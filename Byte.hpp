@@ -20,14 +20,22 @@ namespace Binary
         Byte() = default;
         ~Byte() = default;
         
-        Byte(std::initializer_list<char>);
+        template<typename T>
+        Byte(const std::initializer_list<T> data)
+        {
+            myByteData = static_cast<unsigned char>(*data.begin());
+        }
         
         static unsigned char read(std::istream& is);
         void write(std::ostream& os);
         
+        void operator=(unsigned char& c) {myByteData = c;}
+        operator unsigned char() const {return myByteData;}
+        
     private:
-        unsigned char byteData;
+        unsigned char myByteData;
     };
+    
 }
 
 #endif /* Byte_hpp */

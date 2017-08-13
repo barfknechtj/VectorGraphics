@@ -37,17 +37,17 @@ TEST(writeByte, Byte)
     
     CHECK_EQUAL("x", ss.str());
 }
-/*
+
 TEST(assign, Byte)
 {
     unsigned char c1{'a'};
     Binary::Byte byte1;
     byte1 = c1;
     CHECK_EQUAL('a', byte1);
-    
+
     Binary::Byte byte2{'b'};
     CHECK_EQUAL('b', byte2);
-    
+
     unsigned char c3{};
     c3 = byte2;
     CHECK_EQUAL('b', c3);
@@ -57,7 +57,7 @@ TEST(assign, Byte)
     
     Binary::Byte byte3{c4};
     CHECK_EQUAL('a', byte3);
-    
+
     Binary::Byte byte4{byte3};
     CHECK_EQUAL('a', byte4);
     
@@ -65,7 +65,7 @@ TEST(assign, Byte)
     byte5 = byte4;
     CHECK_EQUAL('a', byte5);
 }
-
+/*
 TEST(readWordLittleEndian, Binary)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0 };
