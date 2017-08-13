@@ -28,6 +28,16 @@ TEST(readByte, Byte)
     CHECK_EQUAL('c', b);
 }
 
+TEST(constructByte, Byte)
+{
+    Binary::Byte b('x');
+    
+    std::stringstream ss;
+    b.write(ss);
+    
+    CHECK_EQUAL("x", ss.str());
+}
+
 TEST(writeByte, Byte)
 {
     Binary::Byte b{'x'};

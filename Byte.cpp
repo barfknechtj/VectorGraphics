@@ -19,5 +19,5 @@ unsigned char Binary::Byte::read(std::istream& is)
 
 void Binary::Byte::write(std::ostream& os)
 {
-    os.put(static_cast<char>(myByteData));
+    os.put(static_cast<char>(myValue));
 }
