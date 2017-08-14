@@ -13,52 +13,10 @@
 #include <list>
 #include <string>
 #include "PlacedGraphic.hpp"
+#include "Layer.hpp"
 
 namespace Framework
-{
-    using PlacedGraphic = Framework::PlacedGraphic;
-    
-    class Layer
-    {
-    private:
-        typedef std::list<PlacedGraphic> PlacedGraphicCollection;
-        
-    public:
-        typedef PlacedGraphicCollection::iterator PlacedGraphicIterator;
-        
-        Layer() = default;
-        Layer(const std::string& alias);
-        Layer(const Layer& rhs) = default;
-        Layer(Layer&& rhs) = default;
-        Layer& operator=(const Layer& rhs) = default;
-        Layer& operator=(Layer&& rhs) = default;
-        ~Layer() = default;
-        
-        PlacedGraphicIterator begin();
-        PlacedGraphicIterator end();
-        size_t size() const;
-        
-        PlacedGraphicIterator insert(PlacedGraphicIterator it,
-                                     const PlacedGraphic& placedGraphic);
-        PlacedGraphicIterator insert(PlacedGraphicIterator it,
-                                     PlacedGraphic&& placedGraphic);
-        void pushBack(const PlacedGraphic& placedGraphic);
-        void pushBack(PlacedGraphic&& placedGraphic);
-        
-        PlacedGraphicIterator erase(PlacedGraphicIterator it);
-        void remove(const PlacedGraphic& placedGraphic);
-        
-        std::string getAlias() const;
-        void setAlias(const std::string& alias);
-        
-        bool operator==(const Layer& rhs) const;
-        bool operator!=(const Layer& rhs) const;
-        
-    private:
-        PlacedGraphicCollection myGraphics;
-        std::string myAlias;
-    };
-    
+{    
     class Scene
     {
     private:
