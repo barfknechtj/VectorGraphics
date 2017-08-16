@@ -1,0 +1,44 @@
+//
+//  Color.hpp
+//  Assignment2
+//
+//  Created by Jared Barfknecht on 8/15/17.
+//  Copyright © 2017 Jared Barfknecht. All rights reserved.
+//
+
+#ifndef Color_hpp
+#define Color_hpp
+
+#include <stdio.h>
+#include "Byte.hpp"
+
+namespace BitmapGraphics
+{
+    class Color
+    {
+    public:
+        Color() = default;
+        ~Color() = default;
+        
+        template<typename T>
+        Color(const std::initializer_list<T> data)
+        {
+            auto it = data.begin();
+            auto itEnd = data.end();
+            if(it != itEnd) {red = *it++;};
+            if(it != itEnd) {green = *it++;};
+            if(it != itEnd) {blue = *it;};
+        }
+        
+        Binary::Byte getRed() const {return red;}
+        Binary::Byte getGreen() const {return green;}
+        Binary::Byte getBlue() const {return blue;}
+        
+    private:
+        Binary::Byte red;
+        Binary::Byte green;
+        Binary::Byte blue;
+    };
+}
+
+#endif /* Color_hpp */
