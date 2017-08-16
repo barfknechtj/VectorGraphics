@@ -8,3 +8,19 @@
 
 #include "Color.hpp"
 
+BitmapGraphics::Color BitmapGraphics::Color::read(std::istream& is)
+{
+    BitmapGraphics::Color color;
+    color.blue = Binary::Byte::read(is);
+    color.green = Binary::Byte::read(is);
+    color.red = Binary::Byte::read(is);
+    
+    return color;
+}
+
+bool BitmapGraphics::operator==(const Color& lhs, const Color& rhs)
+{
+    return lhs.getBlue() == rhs.getBlue()   &&
+           lhs.getGreen() == rhs.getGreen() &&
+           lhs.getRed() == rhs.getRed();
+}

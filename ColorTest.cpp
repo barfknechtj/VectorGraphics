@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include <vector>
 #include "TestHarness.h"
 #include "Color.hpp"
 
@@ -31,7 +32,6 @@ TEST(createColorWithZeroes, Color)
     CHECK_EQUAL(0x00, color.getBlue());
 }
 
-/*
 TEST(readColor, Color)
 {
     unsigned char colorData[]{ 0x23, 0x24, 0x25, 0 };
@@ -76,5 +76,5 @@ TEST(readScanLines, Color)
     const Color expected{ 0x33, 0x22, 0x11 };
     Color actual{ scanLines[1][0] };
     
-    CHECK_EQUAL(expected, actual);
-}*/
+    CHECK_EQUAL(true, expected == actual);
+}

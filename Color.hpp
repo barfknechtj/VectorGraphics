@@ -30,15 +30,19 @@ namespace BitmapGraphics
             if(it != itEnd) {blue = *it;};
         }
         
-        Binary::Byte getRed() const {return red;}
-        Binary::Byte getGreen() const {return green;}
+        static Color read(std::istream& is);
+        
         Binary::Byte getBlue() const {return blue;}
+        Binary::Byte getGreen() const {return green;}
+        Binary::Byte getRed() const {return red;}
         
     private:
-        Binary::Byte red;
-        Binary::Byte green;
         Binary::Byte blue;
+        Binary::Byte green;
+        Binary::Byte red;
     };
+    
+    bool operator==(const Color& lhs, const Color& rhs);
 }
 
 #endif /* Color_hpp */
