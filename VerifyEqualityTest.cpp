@@ -31,13 +31,13 @@ TEST(verifyEquality, Word)
         CHECK(true);
     }
 }
-/*
+
 TEST(verifyEquality, DoubleWord)
 {
     const unsigned char input[]{ 0xAB, 0xCD, 0xAB, 0xCD, 0 };
     std::stringstream ss{reinterpret_cast<const char*>(input)};
     
-    Binary::Word actual{ Binary::DoubleWord::readLittleEndian(ss) };
+    Binary::DoubleWord actual{ Binary::DoubleWord::readLittleEndian(ss) };
     const Binary::DoubleWord notReallyExpected{0xABCDABCD};
     
     try
@@ -51,4 +51,3 @@ TEST(verifyEquality, DoubleWord)
         CHECK(true);
     }
 }
-*/
