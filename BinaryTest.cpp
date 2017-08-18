@@ -75,7 +75,7 @@ TEST(assign, Byte)
     byte5 = byte4;
     CHECK_EQUAL('a', byte5);
 }
-/*
+
 TEST(readWordLittleEndian, Binary)
 {
     unsigned char carray[]{ 0xb1, 0xb2, 0 };
@@ -96,6 +96,34 @@ TEST(readWordBigEndian, Binary)
     Binary::Word actual = Binary::Word::readBigEndian(ss);
     
     CHECK_EQUAL(expected, actual);
+}
+
+TEST(writeWordLittleEndian, Binary)
+{
+    unsigned char carray[]{ 0xb1, 0xb2, 0 };
+    std::stringstream ss{reinterpret_cast<char*>(carray)};
+    
+    const Binary::Word expected{0xb1b2};
+    Binary::Word actual = Binary::Word::readLittleEndian(ss);
+    
+    std::stringstream ssOutput;
+    actual.writeLittleEndian(ssOutput);
+    
+    CHECK_EQUAL("\261\262", ssOutput.str());
+}
+
+TEST(writeWordBigEndian, Binary)
+{
+    unsigned char carray[]{ 0xb1, 0xb2, 0 };
+    std::stringstream ss{reinterpret_cast<char*>(carray)};
+    
+    const Binary::Word expected{0xb1b2};
+    Binary::Word actual = Binary::Word::readLittleEndian(ss);
+    
+    std::stringstream ssOutput;
+    actual.writeBigEndian(ssOutput);
+    
+    CHECK_EQUAL("\262\261", ssOutput.str());
 }
 
 TEST(readDoubleWordLittleEndian, Binary)
@@ -119,4 +147,29 @@ TEST(readDoubleWordBigEndian, Binary)
     
     CHECK_EQUAL(expected, actual);
 }
-*/
+
+TEST(writeDoubleWordLittleEndian, Binary)
+{
+    unsigned char carray[]{ 0xb1, 0xb2, 0xb3, 0xb4, 0 };
+    std::stringstream ss{reinterpret_cast<char*>(carray)};
+    
+    auto actual = Binary::DoubleWord::readLittleEndian(ss);
+    
+    std::stringstream ssOutput;
+    actual.writeLittleEndian(ssOutput);
+    
+    CHECK_EQUAL("\261\262\263\264", ssOutput.str());
+}
+
+TEST(writeDoubleWordBigEndian, Binary)
+{
+    unsigned char carray[]{ 0xb1, 0xb2, 0xb3, 0xb4, 0 };
+    std::stringstream ss{reinterpret_cast<char*>(carray)};
+    
+    auto actual = Binary::DoubleWord::readLittleEndian(ss);
+    
+    std::stringstream ssOutput;
+    actual.writeBigEndian(ssOutput);
+    
+    CHECK_EQUAL("\264\263\262\261", ssOutput.str());
+}

@@ -27,7 +27,7 @@ namespace Binary
         }
         
         static unsigned char read(std::istream& is);
-        void write(std::ostream& os);
+        void write(std::ostream& os) const;
         
         void operator=(unsigned char& c) {myValue = c;}
         operator unsigned char() const {return myValue;}

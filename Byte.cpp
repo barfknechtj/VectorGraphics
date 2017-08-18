@@ -17,7 +17,7 @@ unsigned char Binary::Byte::read(std::istream& is)
     return byte;
 }
 
-void Binary::Byte::write(std::ostream& os)
-{
-    os.put(static_cast<char>(myValue));
+void Binary::Byte::write(std::ostream& os) const
+{    
+    std::copy(&myValue, &myValue + sizeof(unsigned char), std::ostream_iterator<unsigned char>(os));
 }
