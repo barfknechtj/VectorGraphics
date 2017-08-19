@@ -17,4 +17,10 @@ void verifyEquality(const T& lhs, const T& rhs, const char* message)
     if (lhs != rhs) throw std::runtime_error(message);
 }
 
+template<typename T1, typename T2>
+void verifyEquality(const T1& lhs, const T2& rhs, const char* message)
+{
+    if (lhs != rhs) throw std::runtime_error(message);
+}
+
 #endif /* VerifyEquality_h */
