@@ -9,6 +9,8 @@
 #include "Bitmap.hpp"
 #include "Color.hpp"
 
+#include <sstream>
+
 using BitmapGraphics::Bitmap;
 typedef std::list<BitmapGraphics::Color> ScanLine;
 typedef std::list<ScanLine> ScanLineCollection;
@@ -17,6 +19,11 @@ typedef ScanLineCollection::iterator ScanLineIterator;
 Bitmap::Bitmap (const int& width, const int& height, std::istream& sourceStream)
     : myWidth(width), myHeight(height), myScanLineCollection()
 {
+    /* 0x0 is inserted into bitmap to make them 4-byte
+       aligned. Discard pads when reading  */
+    auto numOfPads = calcNumOfPads();
+    char trashOfPads[numOfPads];
+    
     for (auto row = 0; row < height; ++row)
     {
         ScanLine scanLine;
@@ -27,6 +34,9 @@ Bitmap::Bitmap (const int& width, const int& height, std::istream& sourceStream)
         }
         
         myScanLineCollection.push_back(std::move(scanLine));
+        
+        // remove any padding bytes
+        sourceStream.read(trashOfPads, numOfPads);
     }
 }
 
@@ -40,13 +50,43 @@ ScanLineIterator Bitmap::end()
     return myScanLineCollection.end();
 }
 
+int Bitmap::calcNumOfPads() const
+{
+    /* 0x0 is inserted into bitmaps to make them 4-byte
+     aligned. Caluclate number of pads used to construct
+     bitmap  */
+    
+    if(myWidth == 0) {throw std::runtime_error("bitmap width invalid");}
+    
+    int colorComponents = 3;
+    int byteAlignment = 4;
+    auto numOfPads = 0;
+    
+    if (auto remainder = myWidth * colorComponents % byteAlignment)
+    {
+        numOfPads = byteAlignment - remainder;
+    }
+    
+    return numOfPads;
+}
+
 void Bitmap::write(std::ostream& destinationStream) const
 {
+    /* 0x0 is inserted into bitmaps to make them 4-byte
+       aligned. Add correct number (0 - 3) of pads when
+       writing */
+    
+    int numOfPads = calcNumOfPads();
+    char pads[] = {0x0, 0x0, 0x0};
+    
     for (auto scanLine : myScanLineCollection)
     {
         for (auto color : scanLine)
         {
             color.write(destinationStream);
         }
+        
+        // add any padding bytes
+        destinationStream.write(pads, numOfPads);
     }
 }

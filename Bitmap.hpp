@@ -39,6 +39,8 @@ namespace BitmapGraphics
         ScanLineIterator begin();
         ScanLineIterator end();
         
+        int calcNumOfPads() const;
+        
         void write(std::ostream& destinationStream) const;
         
         int getWidth() const {return static_cast<int>(myWidth);}
