@@ -18,6 +18,13 @@ BitmapGraphics::Color BitmapGraphics::Color::read(std::istream& is)
     return color;
 }
 
+void BitmapGraphics::Color::write(std::ostream& os)
+{
+    blue.write(os);
+    green.write(os);
+    red.write(os);
+}
+
 bool BitmapGraphics::operator==(const Color& lhs, const Color& rhs)
 {
     return lhs.getBlue() == rhs.getBlue()   &&

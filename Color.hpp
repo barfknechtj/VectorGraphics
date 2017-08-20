@@ -19,6 +19,7 @@ namespace BitmapGraphics
     public:
         Color() = default;
         ~Color() = default;
+        Color(const Color& color) = default;
         
         template<typename T>
         Color(const std::initializer_list<T> data)
@@ -31,6 +32,7 @@ namespace BitmapGraphics
         }
         
         static Color read(std::istream& is);
+        void write(std::ostream& os);
         
         Binary::Byte getBlue() const {return blue;}
         Binary::Byte getGreen() const {return green;}

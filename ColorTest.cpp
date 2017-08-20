@@ -78,3 +78,16 @@ TEST(readScanLines, Color)
     
     CHECK_EQUAL(true, expected == actual);
 }
+
+TEST(write, Color)
+{
+    unsigned char colorData[]{0xAA, 0xBB, 0xCC};
+    std::istringstream colorInStream{reinterpret_cast<char*>(colorData)};
+    std::ostringstream colorOutStream;
+    
+    auto color{Color::read(colorInStream)};
+    
+    color.write(colorOutStream);
+    
+    CHECK_EQUAL("\252\273\314", colorOutStream.str());
+}
