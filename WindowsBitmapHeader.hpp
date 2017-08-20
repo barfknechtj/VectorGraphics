@@ -31,6 +31,7 @@ namespace BitmapGraphics
         void readFileHeader(std::istream& sourceStream);
         void readInfoHeader(std::istream& sourceStream);
         
+        void write(std::ostream& destinationStream) const;
         void writeFileHeader(std::ostream& destinationStream) const;
         void writeInfoHeader(std::ostream& destinationStream) const;
         

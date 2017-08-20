@@ -60,6 +60,12 @@ void WindowsBitmapHeader::readInfoHeader(std::istream& sourceStream)
     verifyEquality(numberOfImportantColors, DoubleWord::readLittleEndian(sourceStream), "numberOfImportantColors");
 }
 
+void WindowsBitmapHeader::write(std::ostream& destinationStream) const
+{
+    writeFileHeader(destinationStream);
+    writeInfoHeader(destinationStream);
+}
+
 void WindowsBitmapHeader::writeFileHeader(std::ostream& destinationStream) const
 {
     firstIdentifier.write(destinationStream);
