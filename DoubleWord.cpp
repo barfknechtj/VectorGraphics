@@ -31,13 +31,12 @@ Binary::DoubleWord Binary::DoubleWord::readLittleEndian(std::istream& sourceStre
         char c = 0;
         if(!sourceStream.get(c))
         {
-            throw(std::runtime_error("Error message"));
+            throw(std::runtime_error("Invalid stream size"));
         }
         
-        // TODO: try test with static_cast to long - see discussion board
+        // cast to temporary uint to avoid sign-extension
         unsigned int temp = static_cast<unsigned char>(c);
-        unsigned int temp1 = temp << (8 * byte);
-        doubleWord.myValue |= temp1;
+        doubleWord.myValue |= temp << (8 * byte);
     }
     
     return doubleWord;
@@ -54,9 +53,9 @@ Binary::DoubleWord Binary::DoubleWord::readBigEndian(std::istream& sourceStream)
             throw(std::runtime_error("Error message"));
         }
         
+        // cast to temporary uint to avoid sign-extension
         unsigned int temp = static_cast<unsigned char>(c);
-        unsigned int temp1 = temp << (8 * byte);
-        doubleWord.myValue |= temp1;
+        doubleWord.myValue |= temp << (8 * byte);
     }
     
     return doubleWord;
@@ -65,7 +64,6 @@ Binary::DoubleWord Binary::DoubleWord::readBigEndian(std::istream& sourceStream)
 void Binary::DoubleWord::writeLittleEndian(std::ostream& destinationStream) const
 {
 #ifdef Little_Endian_
-//    std::copy(&myValue, &myValue + sizeof(unsigned long), std::ostream_iterator<unsigned char>(destinationStream));
     
     Byte byte1 = myValue;
     Byte byte2 = myValue >> 8;
@@ -93,8 +91,6 @@ void Binary::DoubleWord::writeLittleEndian(std::ostream& destinationStream) cons
 void Binary::DoubleWord::writeBigEndian(std::ostream& destinationStream) const
 {
 #ifdef Little_Endian_
- 
-//    std::copy(&myValue, &myValue + sizeof(unsigned long), std::ostream_iterator<unsigned char>(destinationStream));
     
     Byte byte1 = myValue;
     Byte byte2 = myValue >> 8;
