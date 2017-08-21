@@ -8,6 +8,7 @@
 
 #include "DoubleWord.hpp"
 #include "Byte.hpp"
+#include "Endianness.h"
 
 Binary::DoubleWord& Binary::DoubleWord::operator=(DoubleWord const& original)
 {
@@ -24,7 +25,7 @@ Binary::DoubleWord& Binary::DoubleWord::operator=(unsigned long value)
 Binary::DoubleWord Binary::DoubleWord::readLittleEndian(std::istream& sourceStream)
 {
     DoubleWord doubleWord;
-    
+
     for (auto byte = 0; byte != sizeof(unsigned int); ++byte)
     {
         char c = 0;
@@ -33,6 +34,7 @@ Binary::DoubleWord Binary::DoubleWord::readLittleEndian(std::istream& sourceStre
             throw(std::runtime_error("Error message"));
         }
         
+        // TODO: try test with static_cast to long - see discussion board
         unsigned int temp = static_cast<unsigned char>(c);
         unsigned int temp1 = temp << (8 * byte);
         doubleWord.myValue |= temp1;
@@ -69,10 +71,10 @@ void Binary::DoubleWord::writeLittleEndian(std::ostream& destinationStream) cons
     Byte byte2 = myValue >> 8;
     Byte byte3 = myValue >> 16;
     Byte byte4 = myValue >> 24;
-    byte4.write(destinationStream);
-    byte3.write(destinationStream);
-    byte2.write(destinationStream);
     byte1.write(destinationStream);
+    byte2.write(destinationStream);
+    byte3.write(destinationStream);
+    byte4.write(destinationStream);
     
 #else
     
@@ -80,10 +82,10 @@ void Binary::DoubleWord::writeLittleEndian(std::ostream& destinationStream) cons
     Byte byte2 = myValue >> 8;
     Byte byte3 = myValue >> 16;
     Byte byte4 = myValue >> 24;
-    byte1.write(destinationStream);
-    byte2.write(destinationStream);
-    byte3.write(destinationStream);
     byte4.write(destinationStream);
+    byte3.write(destinationStream);
+    byte2.write(destinationStream);
+    byte1.write(destinationStream);
     
 #endif
 }
@@ -92,25 +94,27 @@ void Binary::DoubleWord::writeBigEndian(std::ostream& destinationStream) const
 {
 #ifdef Little_Endian_
  
+//    std::copy(&myValue, &myValue + sizeof(unsigned long), std::ostream_iterator<unsigned char>(destinationStream));
+    
     Byte byte1 = myValue;
     Byte byte2 = myValue >> 8;
     Byte byte3 = myValue >> 16;
     Byte byte4 = myValue >> 24;
-    byte1.write(destinationStream);
-    byte2.write(destinationStream);
-    byte3.write(destinationStream);
     byte4.write(destinationStream);
-    
+    byte3.write(destinationStream);
+    byte2.write(destinationStream);
+    byte1.write(destinationStream);
+
 #else
     
     Byte byte1 = myValue;
     Byte byte2 = myValue >> 8;
     Byte byte3 = myValue >> 16;
     Byte byte4 = myValue >> 24;
-    byte4.write(destinationStream);
-    byte3.write(destinationStream);
-    byte2.write(destinationStream);
     byte1.write(destinationStream);
+    byte2.write(destinationStream);
+    byte3.write(destinationStream);
+    byte4.write(destinationStream);
     
 #endif
 }
