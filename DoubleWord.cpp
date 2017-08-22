@@ -53,25 +53,11 @@ void Binary::DoubleWord::writeLittleEndian(std::ostream& destinationStream) cons
 {
 #ifdef Little_Endian_
     
-    Byte byte1 = myValue;
-    Byte byte2 = myValue >> 8;
-    Byte byte3 = myValue >> 16;
-    Byte byte4 = myValue >> 24;
-    byte1.write(destinationStream);
-    byte2.write(destinationStream);
-    byte3.write(destinationStream);
-    byte4.write(destinationStream);
+    writeNativeOrder(destinationStream);
     
 #else
     
-    Byte byte1 = myValue;
-    Byte byte2 = myValue >> 8;
-    Byte byte3 = myValue >> 16;
-    Byte byte4 = myValue >> 24;
-    byte4.write(destinationStream);
-    byte3.write(destinationStream);
-    byte2.write(destinationStream);
-    byte1.write(destinationStream);
+    writeSwappedOrder(destinationStream);
     
 #endif
 }
@@ -80,17 +66,17 @@ void Binary::DoubleWord::writeBigEndian(std::ostream& destinationStream) const
 {
 #ifdef Little_Endian_
     
-    Byte byte1 = myValue;
-    Byte byte2 = myValue >> 8;
-    Byte byte3 = myValue >> 16;
-    Byte byte4 = myValue >> 24;
-    byte4.write(destinationStream);
-    byte3.write(destinationStream);
-    byte2.write(destinationStream);
-    byte1.write(destinationStream);
+    writeSwappedOrder(destinationStream);
 
 #else
     
+    writeNativeOrder(destinationStream);
+    
+#endif
+}
+
+void Binary::DoubleWord::writeNativeOrder(std::ostream& destinationStream) const
+{
     Byte byte1 = myValue;
     Byte byte2 = myValue >> 8;
     Byte byte3 = myValue >> 16;
@@ -99,6 +85,15 @@ void Binary::DoubleWord::writeBigEndian(std::ostream& destinationStream) const
     byte2.write(destinationStream);
     byte3.write(destinationStream);
     byte4.write(destinationStream);
-    
-#endif
+}
+void Binary::DoubleWord::writeSwappedOrder(std::ostream& destinationStream) const
+{
+    Byte byte1 = myValue;
+    Byte byte2 = myValue >> 8;
+    Byte byte3 = myValue >> 16;
+    Byte byte4 = myValue >> 24;
+    byte4.write(destinationStream);
+    byte3.write(destinationStream);
+    byte2.write(destinationStream);
+    byte1.write(destinationStream);
 }

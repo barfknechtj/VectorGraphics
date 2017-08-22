@@ -36,17 +36,11 @@ void Binary::Word::writeLittleEndian(std::ostream& destinationStream) const
 {
 #ifdef Little_Endian_
 
-    Byte byte1 = myValue;
-    Byte byte2 = myValue >> 8;
-    byte1.write(destinationStream);
-    byte2.write(destinationStream);
+    writeNativeOrder(destinationStream);
     
 #else
-    
-    Byte byte1 = myValue;
-    Byte byte2 = myValue >> 8;
-    byte2.write(destinationStream);
-    byte1.write(destinationStream);
+
+    writeSwappedOrder(destinationStream);
 
 #endif
 }
@@ -56,18 +50,28 @@ void Binary::Word::writeBigEndian(std::ostream& destinationStream) const
 {
 #ifdef Little_Endian_
     
-    Byte byte1 = myValue;
-    Byte byte2 = myValue >> 8;
-    byte2.write(destinationStream);
-    byte1.write(destinationStream);
+    writeSwappedOrder(destinationStream);
  
 #else
     
+    writeNativeOrder(destinationStream);
+    
+#endif
+}
+
+
+void Binary::Word::writeNativeOrder(std::ostream& destinationStream) const
+{
     Byte byte1 = myValue;
     Byte byte2 = myValue >> 8;
     byte1.write(destinationStream);
     byte2.write(destinationStream);
-    
-#endif
+}
+void Binary::Word::writeSwappedOrder(std::ostream& destinationStream) const
+{
+    Byte byte1 = myValue;
+    Byte byte2 = myValue >> 8;
+    byte2.write(destinationStream);
+    byte1.write(destinationStream);
 }
 

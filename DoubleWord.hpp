@@ -22,6 +22,7 @@ namespace Binary
         
         static DoubleWord readLittleEndian(std::istream& sourceStream);
         static DoubleWord readBigEndian(std::istream& sourceStream);
+        
         void writeLittleEndian(std::ostream& destinationStream) const;
         void writeBigEndian(std::ostream& destinationStream) const;
         
@@ -29,6 +30,9 @@ namespace Binary
         
     private:
         uint32_t myValue;
+        
+        void writeNativeOrder(std::ostream& destinationStream) const;
+        void writeSwappedOrder(std::ostream& destinationStream) const;
     };
 }
 
