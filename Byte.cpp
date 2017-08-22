@@ -8,16 +8,16 @@
 
 #include "Byte.hpp"
 
-unsigned char Binary::Byte::read(std::istream& is)
+uint8_t Binary::Byte::read(std::istream& is)
 {
     char temp;
     is.get(temp);
-    unsigned char byte = static_cast<unsigned char>(temp);
+    uint8_t byte = static_cast<uint8_t>(temp);
     
     return byte;
 }
 
 void Binary::Byte::write(std::ostream& os) const
 {    
-    std::copy(&myValue, &myValue + sizeof(unsigned char), std::ostream_iterator<unsigned char>(os));
+    std::copy(&myValue, &myValue + sizeof(uint8_t), std::ostream_iterator<uint8_t>(os));
 }

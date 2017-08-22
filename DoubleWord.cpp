@@ -16,7 +16,7 @@ Binary::DoubleWord& Binary::DoubleWord::operator=(DoubleWord const& original)
     return *this;
 }
 
-Binary::DoubleWord& Binary::DoubleWord::operator=(unsigned long value)
+Binary::DoubleWord& Binary::DoubleWord::operator=(uint32_t value)
 {
     this->myValue = value;
     return *this;
@@ -25,8 +25,8 @@ Binary::DoubleWord& Binary::DoubleWord::operator=(unsigned long value)
 Binary::DoubleWord Binary::DoubleWord::readLittleEndian(std::istream& sourceStream)
 {
     DoubleWord doubleWord;
-
-    for (auto byte = 0; byte != sizeof(unsigned int); ++byte)
+    
+    for (auto byte = 0; byte != sizeof(uint32_t); ++byte)
     {
         char c = 0;
         if(!sourceStream.get(c))
@@ -35,7 +35,7 @@ Binary::DoubleWord Binary::DoubleWord::readLittleEndian(std::istream& sourceStre
         }
         
         // cast to temporary uint to avoid sign-extension
-        unsigned int temp = static_cast<unsigned char>(c);
+        uint32_t temp = static_cast<uint8_t>(c);
         doubleWord.myValue |= temp << (8 * byte);
     }
     
@@ -45,7 +45,7 @@ Binary::DoubleWord Binary::DoubleWord::readBigEndian(std::istream& sourceStream)
 {
     DoubleWord doubleWord;
     
-    for (int byte = static_cast<int>(sizeof(unsigned int) - 1); byte != -1; --byte)
+    for (int byte = (sizeof(uint32_t) - 1); byte != -1; --byte)
     {
         char c = 0;
         if(!sourceStream.get(c))
@@ -54,7 +54,7 @@ Binary::DoubleWord Binary::DoubleWord::readBigEndian(std::istream& sourceStream)
         }
         
         // cast to temporary uint to avoid sign-extension
-        unsigned int temp = static_cast<unsigned char>(c);
+        uint32_t temp = static_cast<uint8_t>(c);
         doubleWord.myValue |= temp << (8 * byte);
     }
     

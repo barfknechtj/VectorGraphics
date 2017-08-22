@@ -17,23 +17,23 @@ namespace Binary
     class Byte
     {
     public:
-        Byte(unsigned char byte = 0) : myValue(byte) { };
+        Byte(uint8_t byte = 0) : myValue(byte) { };
         ~Byte() = default;
         
         template<typename T>
         Byte(const std::initializer_list<T> data)
         {
-            myValue = static_cast<unsigned char>(*data.begin());
+            myValue = static_cast<uint8_t>(*data.begin());
         }
         
-        static unsigned char read(std::istream& is);
+        static uint8_t read(std::istream& is);
         void write(std::ostream& os) const;
         
-        void operator=(unsigned char& c) {myValue = c;}
-        operator unsigned char() const {return myValue;}
+        void operator=(uint8_t& c) {myValue = c;}
+        operator uint8_t() const {return myValue;}
         
     private:
-        unsigned char myValue;
+        uint8_t myValue;
     };
     
 }

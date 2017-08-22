@@ -14,7 +14,7 @@ Binary::Word& Binary::Word::operator=(Word const& original)
     return *this;
 }
 
-Binary::Word& Binary::Word::operator=(unsigned short value)
+Binary::Word& Binary::Word::operator=(uint16_t value)
 {
     this->myValue = value;
     return *this;

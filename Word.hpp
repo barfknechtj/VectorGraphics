@@ -19,27 +19,27 @@ namespace Binary
     class Word
     {
         public:
-            Word(unsigned short value = 0) : myValue (value) { };
+            Word(uint16_t value = 0) : myValue (value) { };
             ~Word() = default;
         
             template<typename T>
             Word(const std::initializer_list<T> data)
             {
-                myValue = static_cast<unsigned short>(*data.begin());
+                myValue = static_cast<uint16_t>(*data.begin());
             }
         
             Word& operator=(Word const& original);
-            Word& operator=(unsigned short value);
+            Word& operator=(uint16_t value);
         
             static Word readLittleEndian(std::istream& sourceStream);
             static Word readBigEndian(std::istream& sourceStream);
             void writeLittleEndian(std::ostream& destinationStream) const;
             void writeBigEndian(std::ostream& destinationStream) const;
 
-            operator unsigned short () const {return myValue;}
+            operator uint16_t () const {return myValue;}
         
         private:
-            unsigned short myValue;
+            uint16_t myValue;
     };
 }
 
