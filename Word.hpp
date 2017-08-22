@@ -21,16 +21,7 @@ namespace Binary
         public:
             Word(uint16_t value = 0) : myValue (value) { };
             ~Word() = default;
-        
-            template<typename T>
-            Word(const std::initializer_list<T> data)
-            {
-                myValue = static_cast<uint16_t>(*data.begin());
-            }
-        
-            Word& operator=(Word const& original);
-            Word& operator=(uint16_t value);
-        
+                
             static Word readLittleEndian(std::istream& sourceStream);
             static Word readBigEndian(std::istream& sourceStream);
             void writeLittleEndian(std::ostream& destinationStream) const;

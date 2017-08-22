@@ -20,16 +20,9 @@ namespace Binary
         Byte(uint8_t byte = 0) : myValue(byte) { };
         ~Byte() = default;
         
-        template<typename T>
-        Byte(const std::initializer_list<T> data)
-        {
-            myValue = static_cast<uint8_t>(*data.begin());
-        }
-        
         static uint8_t read(std::istream& is);
         void write(std::ostream& os) const;
         
-        void operator=(uint8_t& c) {myValue = c;}
         operator uint8_t() const {return myValue;}
         
     private:

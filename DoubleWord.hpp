@@ -20,15 +20,6 @@ namespace Binary
         DoubleWord(uint32_t value = 0) : myValue (value) { };
         ~DoubleWord() = default;
         
-        template<typename T>
-        DoubleWord(const std::initializer_list<T> data)
-        {
-            myValue = static_cast<uint32_t>(*data.begin());
-        }
-        
-        DoubleWord& operator=(DoubleWord const& original);
-        DoubleWord& operator=(uint32_t value);
-        
         static DoubleWord readLittleEndian(std::istream& sourceStream);
         static DoubleWord readBigEndian(std::istream& sourceStream);
         void writeLittleEndian(std::ostream& destinationStream) const;

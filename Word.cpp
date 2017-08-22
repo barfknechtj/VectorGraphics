@@ -8,18 +8,6 @@
 
 #include "Word.hpp"
 
-Binary::Word& Binary::Word::operator=(Word const& original)
-{
-    this->myValue = original.myValue;
-    return *this;
-}
-
-Binary::Word& Binary::Word::operator=(uint16_t value)
-{
-    this->myValue = value;
-    return *this;
-}
-
 Binary::Word Binary::Word::readLittleEndian(std::istream& sourceStream)
 {
     auto byte1 = Binary::Byte::read(sourceStream);

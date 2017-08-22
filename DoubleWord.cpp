@@ -10,18 +10,6 @@
 #include "Byte.hpp"
 #include "Endianness.h"
 
-Binary::DoubleWord& Binary::DoubleWord::operator=(DoubleWord const& original)
-{
-    this->myValue = original.myValue;
-    return *this;
-}
-
-Binary::DoubleWord& Binary::DoubleWord::operator=(uint32_t value)
-{
-    this->myValue = value;
-    return *this;
-}
-
 Binary::DoubleWord Binary::DoubleWord::readLittleEndian(std::istream& sourceStream)
 {
     DoubleWord doubleWord;
