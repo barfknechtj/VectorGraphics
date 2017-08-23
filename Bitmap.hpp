@@ -36,8 +36,8 @@ namespace BitmapGraphics
         Bitmap(const int& width, const int& height, std::istream& sourceStream);
         ~Bitmap() = default;
         
-        ScanLineIterator begin();
-        ScanLineIterator end();
+        ScanLineIterator begin() {return myScanLineCollection.begin();}
+        ScanLineIterator end() {return myScanLineCollection.end();}
         
         int calcNumOfPads() const;
         

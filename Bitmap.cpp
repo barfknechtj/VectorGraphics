@@ -40,16 +40,6 @@ Bitmap::Bitmap (const int& width, const int& height, std::istream& sourceStream)
     }
 }
 
-ScanLineIterator Bitmap::begin()
-{
-    return myScanLineCollection.begin();
-}
-
-ScanLineIterator Bitmap::end()
-{
-    return myScanLineCollection.end();
-}
-
 int Bitmap::calcNumOfPads() const
 {
     /* 0x0 is inserted into bitmaps to make them 4-byte
@@ -60,7 +50,7 @@ int Bitmap::calcNumOfPads() const
     
     int colorComponents = 3;
     int byteAlignment = 4;
-    auto numOfPads = 0;
+    int numOfPads = 0;
     
     if (auto remainder = myWidth * colorComponents % byteAlignment)
     {
