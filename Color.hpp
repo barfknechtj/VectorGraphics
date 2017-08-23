@@ -19,7 +19,6 @@ namespace BitmapGraphics
     public:
         Color() = default;
         ~Color() = default;
-        Color(const Color& color) = default;
         
         template<typename T>
         Color(const std::initializer_list<T> data)

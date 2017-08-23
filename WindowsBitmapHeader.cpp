@@ -39,7 +39,7 @@ WindowsBitmapHeader::WindowsBitmapHeader(std::istream& sourceStream)
 void WindowsBitmapHeader::readFileHeader(std::istream& sourceStream)
 {
     verifyEquality(firstIdentifier, Byte::read(sourceStream), "firstIdentifier");
-    verifyEquality (secondIdentifier, Byte::read (sourceStream), "secondIdentifier");
+    verifyEquality(secondIdentifier, Byte::read (sourceStream), "secondIdentifier");
     this->fileSize = DoubleWord::readLittleEndian(sourceStream);
     verifyEquality(reserved, DoubleWord::readLittleEndian(sourceStream), "reserved");
     verifyEquality(rawImageByteOffset, DoubleWord::readLittleEndian(sourceStream), "rawImageByteOffset");
