@@ -10,7 +10,8 @@
 
 using namespace BitmapGraphics;
 
-BitmapIterator::BitmapIterator(Bitmap& bitmap) : myBitmap(bitmap)
+BitmapIterator::BitmapIterator(Bitmap& bitmap)
+    : myBitmap(bitmap)
 {
         _scanLineIter = myBitmap.begin();
         _colorIter = _scanLineIter->begin();
