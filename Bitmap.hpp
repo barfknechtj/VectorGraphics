@@ -30,6 +30,8 @@ namespace BitmapGraphics
         ScanLineCollection myScanLineCollection;
         
     public:
+        
+        typedef ScanLine::iterator ColorIterator;
         typedef ScanLineCollection::iterator ScanLineIterator;
         
         Bitmap() = default;

@@ -16,11 +16,12 @@ typedef std::list<BitmapGraphics::Color> ScanLine;
 typedef std::list<ScanLine> ScanLineCollection;
 typedef ScanLineCollection::iterator ScanLineIterator;
 
-Bitmap::Bitmap (const int& width, const int& height, std::istream& sourceStream)
+Bitmap::Bitmap(const int& width, const int& height, std::istream& sourceStream)
     : myWidth(width), myHeight(height), myScanLineCollection()
 {
     /* 0x0 is inserted into bitmap to make them 4-byte
        aligned. Discard pads when reading  */
+    
     auto numOfPads = calcNumOfPads();
     char trashOfPads[numOfPads];
     
@@ -43,8 +44,8 @@ Bitmap::Bitmap (const int& width, const int& height, std::istream& sourceStream)
 int Bitmap::calcNumOfPads() const
 {
     /* 0x0 is inserted into bitmaps to make them 4-byte
-     aligned. Caluclate number of pads used to construct
-     bitmap  */
+       aligned. Caluclate number of pads used to construct
+       bitmap  */
     
     if(myWidth == 0) {throw std::runtime_error("bitmap width invalid");}
     
