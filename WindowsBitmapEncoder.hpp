@@ -26,7 +26,7 @@ namespace BitmapGraphics
         
         virtual ~IBitmapEncoder() = default;
         virtual HBitmapEncoder clone(HBitmapIterator& hBitmapIter) = 0;
-        virtual void encodeToStream(std::ofstream& destinationStream) = 0;
+        virtual void encodeToStream(std::ostream& destinationStream) = 0;
         virtual std::string getMimeType() const = 0;
     };
     
@@ -42,7 +42,7 @@ namespace BitmapGraphics
         ~WindowsBitmapEncoder() = default;
         
         HBitmapEncoder clone(HBitmapIterator& hBitmapIter) override;
-        void encodeToStream(std::ofstream& destinationStream) override;
+        void encodeToStream(std::ostream& destinationStream) override;
         std::string getMimeType() const override {return myMimeType;}
         
     private:
@@ -50,8 +50,8 @@ namespace BitmapGraphics
         HBitmapIterator hBitmapIter;
         HBitmapHeader hBitmapHeader;
         
-        void _encodeHeaderToStream(std::ofstream& destinationStream);
-        void _encodeBitmapToStream(std::ofstream& destinationStream);
+        void _encodeHeaderToStream(std::ostream& destinationStream);
+        void _encodeBitmapToStream(std::ostream& destinationStream);
         uint _calcNumOfPads() const;
         uint _calcFileSize() const;
     };

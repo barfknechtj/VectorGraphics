@@ -45,12 +45,12 @@ HBitmapEncoder WindowsBitmapEncoder::clone(HBitmapIterator& hBitmapIter)
     return hEncoder;
 }
 
-void WindowsBitmapEncoder::_encodeHeaderToStream(std::ofstream& destinationStream)
+void WindowsBitmapEncoder::_encodeHeaderToStream(std::ostream& destinationStream)
 {
     hBitmapHeader->write(destinationStream);
 }
 
-void WindowsBitmapEncoder::_encodeBitmapToStream(std::ofstream& destinationStream)
+void WindowsBitmapEncoder::_encodeBitmapToStream(std::ostream& destinationStream)
 {
     int numOfPadsOnLine = _calcNumOfPads();
     char pads[] = {0x0, 0x0, 0x0};
@@ -68,14 +68,15 @@ void WindowsBitmapEncoder::_encodeBitmapToStream(std::ofstream& destinationStrea
     }
 }
 
-
-void WindowsBitmapEncoder::encodeToStream(std::ofstream& destinationStream)
+void WindowsBitmapEncoder::encodeToStream(std::ostream& destinationStream)
 {
-    if(hBitmapIter != nullptr)
+    if(!hBitmapIter)
     {
+        throw std::runtime_error("User must specify bitmap data to encode");
+    } else {
         _encodeHeaderToStream(destinationStream);
         _encodeBitmapToStream(destinationStream);
-    }
+    }   
 }
 
 uint WindowsBitmapEncoder::_calcNumOfPads() const

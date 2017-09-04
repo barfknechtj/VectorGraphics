@@ -66,5 +66,11 @@ bool WindowsBitmapDecoder::isSupported(std::istream& sourceStream) const
 
 HBitmapIterator WindowsBitmapDecoder::createIterator()
 {
-    return std::make_shared<BitmapIterator>(*hBitmap);
+    if(!hBitmap)
+    {
+        throw std::runtime_error("User must specify bitmap to decode");
+    }
+    else {
+        return std::make_shared<BitmapIterator>(*hBitmap);
+    }
 }
