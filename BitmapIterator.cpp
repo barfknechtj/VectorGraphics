@@ -14,13 +14,20 @@ BitmapIterator::BitmapIterator(Bitmap& bitmap)
     : myBitmap(bitmap)
 {
         _scanLineIter = myBitmap.begin();
+    
+    if(!isEndOfImage())
+    {
         _colorIter = _scanLineIter->begin();
+    }
 }
 
 void BitmapIterator::nextScanLine()
 {
     ++_scanLineIter;
-    _colorIter = _scanLineIter->begin();    
+    if(!isEndOfImage())
+    {
+        _colorIter = _scanLineIter->begin();
+    }
 }
 
 bool BitmapIterator::isEndOfImage()
