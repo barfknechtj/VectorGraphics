@@ -13,27 +13,13 @@
 #include <string>
 #include <memory>
 #include <fstream>
-//#include "IBitmapIterator.hpp"
 #include "WindowsBitmapHeader.hpp"
 #include "Bitmap.hpp"
+#include "IBitmapDecoder.hpp"
 
 
 namespace BitmapGraphics
-{
-    class IBitmapDecoder
-    {
-    public:
-        using HBitmapDecoder = std::shared_ptr<IBitmapDecoder>;
-        using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
-
-        virtual ~IBitmapDecoder() = default;
-        virtual HBitmapDecoder clone(std::istream& sourceStream) = 0;
-        virtual HBitmapIterator createIterator() = 0;
-        virtual void setMimeType(const std::string& mimeType) = 0;
-        virtual std::string getMimeType() const = 0;
-        virtual bool isSupported(std::istream& sourceStream) const = 0;
-    };
-    
+{    
     class WindowsBitmapDecoder : public IBitmapDecoder
     {
     private:
