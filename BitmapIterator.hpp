@@ -29,8 +29,8 @@ namespace BitmapGraphics
         virtual bool isEndOfScanLine() = 0;
         
         virtual Color getColor() const = 0;
-        virtual int getBitmapWidth() const = 0;
-        virtual int getBitmapHeight() const = 0;
+        virtual uint getBitmapWidth() const = 0;
+        virtual uint getBitmapHeight() const = 0;
     };
     
     class BitmapIterator : public IBitmapIterator
@@ -46,8 +46,8 @@ namespace BitmapGraphics
         bool isEndOfScanLine() override;
         
         Color getColor() const override {return *_colorIter;}
-        int getBitmapWidth() const override {return myBitmap.getWidth();}
-        int getBitmapHeight() const override {return myBitmap.getHeight();}
+        uint getBitmapWidth() const override {return myBitmap.getWidth();}
+        uint getBitmapHeight() const override {return myBitmap.getHeight();}
         
     private:
         Bitmap& myBitmap;
