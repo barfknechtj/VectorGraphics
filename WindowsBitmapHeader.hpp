@@ -25,6 +25,12 @@ namespace BitmapGraphics
     {
     public:
         WindowsBitmapHeader() = default;
+        WindowsBitmapHeader(Binary::DoubleWord fSize,
+                            Binary::DoubleWord bWidth,
+                            Binary::DoubleWord bHeight,
+                            Binary::DoubleWord compSize,
+                            Binary::DoubleWord hPixelsPerMeter,
+                            Binary::DoubleWord vPixelsPerMeter);
         WindowsBitmapHeader(std::istream& sourceStream);
         ~WindowsBitmapHeader() = default;
 

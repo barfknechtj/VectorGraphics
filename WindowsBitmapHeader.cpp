@@ -36,6 +36,18 @@ WindowsBitmapHeader::WindowsBitmapHeader(std::istream& sourceStream)
     readInfoHeader(sourceStream);
 }
 
+WindowsBitmapHeader::WindowsBitmapHeader(Binary::DoubleWord fSize,
+                                         Binary::DoubleWord bWidth,
+                                         Binary::DoubleWord bHeight,
+                                         Binary::DoubleWord compSize,
+                                         Binary::DoubleWord hPixelsPerMeter,
+                                         Binary::DoubleWord vPixelsPerMeter)
+    : fileSize(fSize), bitmapWidth(bWidth), bitmapHeight(bHeight),
+      compressionSize(compSize), horizontalPixelsPerMeter(hPixelsPerMeter),
+      verticalPixelsPerMeter(vPixelsPerMeter)
+{
+}
+
 void WindowsBitmapHeader::readFileHeader(std::istream& sourceStream)
 {
     verifyEquality(firstIdentifier, Byte::read(sourceStream), "firstIdentifier");
