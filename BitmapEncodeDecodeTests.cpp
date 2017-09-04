@@ -94,7 +94,7 @@ TEST(BitmapScanLinesTest, BitmapIterator)
     }
     CHECK_EQUAL(100, numberOfScanLines);
 }
-/*
+
 TEST(BitmapEncodeDecode, Bitmap)
 {
     // Read in the bitmap
@@ -138,7 +138,6 @@ TEST(BitmapEncodeDecode, Bitmap)
     }
     CHECK_EQUAL(100, numberOfScanLines);
 }
-*/
 
 //// --- Repeat the tests with a bitmap that requires pad bytes (101x101)
 TEST(BitmapSizeTest_101, BitmapIterator)
@@ -179,8 +178,8 @@ TEST(BitmapScanLinesTest_101, BitmapIterator)
     }
     CHECK_EQUAL(101, numberOfScanLines);
 }
-/*
-TEST(BitmapReadWrite_101, Bitmap)
+
+TEST(BitmapEncodeDecode_101, Bitmap)
 {
     // Read in the bitmap
     
@@ -193,7 +192,7 @@ TEST(BitmapReadWrite_101, Bitmap)
     
     // Write out the bitmap to a different file with its write() method
     
-    std::ofstream outputStream{"EncodeOutput_101.bmp", std::ios::binary};
+    std::ofstream outputStream{"EncodedOutput_101.bmp", std::ios::binary};
     CHECK(outputStream.is_open());
     
     WindowsBitmapEncoder encoderPrototype{};
@@ -225,4 +224,3 @@ TEST(BitmapReadWrite_101, Bitmap)
     }
     CHECK_EQUAL(101, numberOfScanLines);
 }
-*/
