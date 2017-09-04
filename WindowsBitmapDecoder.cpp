@@ -17,16 +17,9 @@ WindowsBitmapDecoder::WindowsBitmapDecoder(HBitmap bitmap)
 }
 
 HBitmapDecoder WindowsBitmapDecoder::clone(std::istream& sourceStream)
-{
-    if(!isSupported(sourceStream))
-    {
-        throw std::runtime_error("File type unidentifiable in header");
-    }
-    
+{    
     // read from bitmap header
-    HBitmapHeader hHeader = std::make_shared<WindowsBitmapHeader>();
-    hHeader->readFileHeader(sourceStream);
-    hHeader->readInfoHeader(sourceStream);
+    HBitmapHeader hHeader = std::make_shared<WindowsBitmapHeader>(sourceStream);
     
     // read from bitmap pixel data
     HBitmap hBitmap = std::make_shared<Bitmap>(hHeader->getBitmapWidth(),
@@ -40,6 +33,7 @@ HBitmapDecoder WindowsBitmapDecoder::clone(std::istream& sourceStream)
     return hDecoder;
 }
 
+// TODO: find
 bool WindowsBitmapDecoder::isSupported(std::istream& sourceStream) const
 {
     int var1 = sourceStream.peek();
