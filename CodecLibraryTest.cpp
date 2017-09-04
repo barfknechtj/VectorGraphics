@@ -106,17 +106,17 @@ TEST(failedCreateEncoderViaMimeType, CodecLibrary)
     tearDown();
 }
 
-//TEST(createDecoderViaMimeType, CodecLibrary)
-//{
-//    setUp();
-//
-//    std::stringstream ss;
-//    HBitmapDecoder decoder {theCodecLibrary->createDecoder(msBmp, ss)};
-//
-//    CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
-//
-//    tearDown();
-//}
+TEST(createDecoderViaMimeType, CodecLibrary)
+{
+    setUp();
+
+    std::stringstream ss;
+    HBitmapDecoder decoder {theCodecLibrary->createDecoder(ss, msBmp)};
+
+    CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
+
+    tearDown();
+}
 
 TEST(createFailedDecoderViaMimeType, CodecLibrary)
 {
@@ -170,7 +170,6 @@ TEST(windowsBitmapDecodeEncode, CodecLibrary)
 
     std::ofstream outFile{"output_basicCopy.bmp", std::ios::binary};
     encoder->encodeToStream(outFile);
-    // TODO: file compare input/output
 
     tearDown();
 }

@@ -20,23 +20,33 @@ HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream,
     // other decoders can be created from here based off their MimeType
     if(mimeType == "image/x-ms-bmp")
     {
-        WindowsBitmapHeader header(bitmapStream);
-        HBitmap hBitmap = std::make_shared<Bitmap>(header.getBitmapWidth(),
-                                                   header.getBitmapHeight(),
-                                                   bitmapStream);
-    
-        return std::make_shared<WindowsBitmapDecoder>(hBitmap);
+        if(bitmapStream.rdbuf()->in_avail())
+        {
+            WindowsBitmapHeader header(bitmapStream);
+            HBitmap hBitmap = std::make_shared<Bitmap>(header.getBitmapWidth(),
+                                                       header.getBitmapHeight(),
+                                                       bitmapStream);
+            return std::make_shared<WindowsBitmapDecoder>(hBitmap);
+        } else {
+            HBitmap hBitmap = std::make_shared<Bitmap>();
+            return std::make_shared<WindowsBitmapDecoder>(hBitmap);
+        }
     }
     // auto lookup from registered decoders
     else if(mimeType == "") {
         
-        WindowsBitmapDecoder* decoder = dynamic_cast<WindowsBitmapDecoder*>(myDecoders.begin()->get());
-        
-        return decoder->clone(bitmapStream);
-        
-    } else {
-        throw std::runtime_error("Decoder for provided MimeType and/or file not supported");
+        for(auto decoderIter = myDecoders.begin(); decoderIter != myDecoders.end(); ++decoderIter)
+        {
+            WindowsBitmapDecoder* decoder = dynamic_cast<WindowsBitmapDecoder*>(decoderIter->get());
+            if(decoder->isSupported(bitmapStream))
+            {
+                return decoder->clone(bitmapStream);
+            }
+        }
     }
+    
+    // unsupported
+    throw std::runtime_error("Decoder for provided MimeType and/or file not supported");
 }
 
 HBitmapEncoder CodecLibrary::createEncoder(const std::string& mimeType,
