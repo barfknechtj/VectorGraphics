@@ -9,7 +9,6 @@
 #include "CodecLibrary.hpp"
 
 using namespace BitmapGraphics;
-using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
 
 HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream,
                                            const std::string& mimeType)

@@ -15,20 +15,10 @@
 #include "BitmapIterator.hpp"
 #include "WindowsBitmapHeader.hpp"
 #include "Bitmap.hpp"
+#include "IBitmapEncoder.hpp"
 
 namespace BitmapGraphics
-{
-    class IBitmapEncoder
-    {
-    public:
-        using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
-        
-        virtual ~IBitmapEncoder() = default;
-        virtual HBitmapEncoder clone(HBitmapIterator& hBitmapIter) = 0;
-        virtual void encodeToStream(std::ostream& destinationStream) = 0;
-        virtual std::string getMimeType() const = 0;
-    };
-    
+{    
     class WindowsBitmapEncoder : public IBitmapEncoder
     {
     public:

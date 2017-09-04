@@ -10,7 +10,6 @@
 
 using namespace Binary;
 using namespace BitmapGraphics;
-using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
 
 WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter,
                                            const std::string& mimeType)

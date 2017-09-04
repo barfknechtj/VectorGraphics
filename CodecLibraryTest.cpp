@@ -17,7 +17,6 @@
 #include "IBitmapIterator.hpp"
 
 using namespace BitmapGraphics;
-using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
 
 namespace
 {

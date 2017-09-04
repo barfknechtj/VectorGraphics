@@ -21,7 +21,6 @@ namespace BitmapGraphics
     class CodecLibrary
     {
     public:
-        using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
         
         CodecLibrary() = default;
         ~CodecLibrary() = default;
