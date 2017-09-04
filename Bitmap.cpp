@@ -7,7 +7,7 @@
 //
 
 #include "Bitmap.hpp"
-#include "Color.hpp"
+#include "BitmapIterator.hpp"
 
 #include <sstream>
 
@@ -15,6 +15,8 @@ using BitmapGraphics::Bitmap;
 typedef std::list<BitmapGraphics::Color> ScanLine;
 typedef std::list<ScanLine> ScanLineCollection;
 typedef ScanLineCollection::iterator ScanLineIterator;
+
+using namespace BitmapGraphics;
 
 Bitmap::Bitmap(const int& width, const int& height, std::istream& sourceStream)
     : myWidth(width), myHeight(height), myScanLineCollection()
@@ -57,6 +59,11 @@ int Bitmap::calcNumOfPads() const
     }
     
     return numOfPads;
+}
+
+HBitmapIterator Bitmap::createIterator()
+{
+    return std::make_shared<BitmapIterator>(*this);
 }
 
 void Bitmap::write(std::ostream& destinationStream) const

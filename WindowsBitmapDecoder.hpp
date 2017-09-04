@@ -13,7 +13,7 @@
 #include <string>
 #include <memory>
 #include <fstream>
-#include "BitmapIterator.hpp"
+//#include "IBitmapIterator.hpp"
 #include "WindowsBitmapHeader.hpp"
 #include "Bitmap.hpp"
 

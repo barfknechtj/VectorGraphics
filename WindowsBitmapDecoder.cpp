@@ -71,6 +71,6 @@ HBitmapIterator WindowsBitmapDecoder::createIterator()
         throw std::runtime_error("User must specify bitmap to decode");
     }
     else {
-        return std::make_shared<BitmapIterator>(*hBitmap);
+        return hBitmap->createIterator();
     }
 }

@@ -14,6 +14,7 @@
 #include <memory>
 #include <utility>
 #include "Color.hpp"
+#include "IBitmapIterator.hpp"
 
 namespace BitmapGraphics
 {
@@ -41,6 +42,8 @@ namespace BitmapGraphics
         
         ScanLineIterator begin() {return myScanLineCollection.begin();}
         ScanLineIterator end() {return myScanLineCollection.end();}
+        
+        HBitmapIterator createIterator();
         
         int calcNumOfPads() const;
         

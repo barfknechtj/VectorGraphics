@@ -14,7 +14,7 @@
 #include "WindowsBitmapHeader.hpp"
 #include "WindowsBitmapDecoder.hpp"
 #include "WindowsBitmapEncoder.hpp"
-#include "BitmapIterator.hpp"
+#include "IBitmapIterator.hpp"
 
 namespace BitmapGraphics
 {

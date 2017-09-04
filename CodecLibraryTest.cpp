@@ -14,7 +14,7 @@
 //#include "ColorInversionDecorator.h"
 #include "WindowsBitmapDecoder.hpp"
 #include "WindowsBitmapEncoder.hpp"
-#include "BitmapIterator.hpp"
+#include "IBitmapIterator.hpp"
 
 using namespace BitmapGraphics;
 using HBitmapDecoder = std::shared_ptr<IBitmapDecoder>;
@@ -77,7 +77,7 @@ TEST(createEncoderViaMimeType, CodecLibrary)
     setUp();
 
     Bitmap nullBitmap{0, 0};
-    HBitmapIterator iterator = std::make_shared<BitmapIterator>(nullBitmap);
+    HBitmapIterator iterator{nullBitmap.createIterator()};
     HBitmapEncoder encoder {theCodecLibrary->createEncoder(msBmp, iterator)};
 
     CHECK(dynamic_cast<WindowsBitmapEncoder*>(encoder.get()));
@@ -90,7 +90,7 @@ TEST(failedCreateEncoderViaMimeType, CodecLibrary)
     setUp();
     
     Bitmap nullBitmap{0, 0};
-    HBitmapIterator iterator = std::make_shared<BitmapIterator>(nullBitmap);
+    HBitmapIterator iterator{nullBitmap.createIterator()};
     
     try
     {
