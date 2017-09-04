@@ -14,8 +14,8 @@ using HBitmapDecoder = std::shared_ptr<IBitmapDecoder>;
 using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
 using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
 
-HBitmapDecoder CodecLibrary::createDecoder(const std::string& mimeType,
-                                           std::istream& bitmapStream)
+HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream,
+                                           const std::string& mimeType)
 {
     // other decoders can be created from here based off their MimeType
     if(mimeType == "image/x-ms-bmp")

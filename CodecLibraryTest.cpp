@@ -126,7 +126,7 @@ TEST(createFailedDecoderViaMimeType, CodecLibrary)
     
     try
     {
-        HBitmapDecoder decoder {theCodecLibrary->createDecoder("image/unsupported-type", ss)};
+        HBitmapDecoder decoder {theCodecLibrary->createDecoder(ss, "image/unsupported-type")};
         CHECK(false);
     }
     catch (const std::exception& exc)
@@ -144,7 +144,7 @@ TEST(createDecoderAutoDetermine, CodecLibrary)
 
     std::ifstream inFile{"basic.bmp", std::ios::binary};
     CHECK_EQUAL(0, !inFile);
-    HBitmapDecoder decoder {theCodecLibrary->createDecoder("", inFile)};
+    HBitmapDecoder decoder {theCodecLibrary->createDecoder(inFile)};
 
     CHECK(decoder.get());
     CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
@@ -159,7 +159,7 @@ TEST(windowsBitmapDecodeEncode, CodecLibrary)
     std::ifstream inFile{"basic.bmp", std::ios::binary};
     CHECK_EQUAL(0, !inFile);
     
-    HBitmapDecoder decoder {theCodecLibrary->createDecoder("", inFile)};
+    HBitmapDecoder decoder {theCodecLibrary->createDecoder(inFile)};
     HBitmapIterator iterator {decoder->createIterator()};
     
     CHECK(iterator.get());
