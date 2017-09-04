@@ -10,8 +10,11 @@
 #define CodecLibrary_hpp
 
 #include <stdio.h>
+#include "Bitmap.hpp"
+#include "WindowsBitmapHeader.hpp"
 #include "WindowsBitmapDecoder.hpp"
 #include "WindowsBitmapEncoder.hpp"
+#include "BitmapIterator.hpp"
 
 namespace BitmapGraphics
 {
@@ -20,10 +23,16 @@ namespace BitmapGraphics
     public:
         using HBitmapDecoder = std::shared_ptr<IBitmapDecoder>;
         using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
+        using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
         
         CodecLibrary() = default;
         ~CodecLibrary() = default;
-        
+
+        HBitmapDecoder createDecoder(const std::string& mimeType = "",
+                                     std::istream& bitmapStream = std::cin);
+        HBitmapEncoder createEncoder(const std::string& mimeType,
+                                     HBitmapIterator hIter);
+
         void registerDecoder(HBitmapDecoder hDecoder);
         void registerEncoder(HBitmapEncoder hEncoder);
         

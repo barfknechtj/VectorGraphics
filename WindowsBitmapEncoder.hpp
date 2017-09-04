@@ -38,7 +38,7 @@ namespace BitmapGraphics
         
     public:
         WindowsBitmapEncoder(HBitmapIterator bitmapIter = nullptr,
-                             std::string mimeType = "image/x-ms-bmp");
+                             const std::string& mimeType = "image/x-ms-bmp");
         ~WindowsBitmapEncoder() = default;
         
         HBitmapEncoder clone(HBitmapIterator& hBitmapIter) override;

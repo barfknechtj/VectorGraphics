@@ -12,7 +12,8 @@ using namespace Binary;
 using namespace BitmapGraphics;
 using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
 
-WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter, std::string mimeType)
+WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter,
+                                           const std::string& mimeType)
     : hBitmapIter(bitmapIter), myMimeType(mimeType)
 {
     // initialize header for encoder, ignored if creating prototype
@@ -87,10 +88,10 @@ uint WindowsBitmapEncoder::_calcNumOfPads() const
     
     uint bitmapWidth{hBitmapIter->getBitmapWidth()};
     
-    if(bitmapWidth == 0)
-    {
-        throw std::runtime_error("bitmap width invalid");
-    }
+//    if(bitmapWidth == 0)
+//    {
+//        throw std::runtime_error("bitmap width invalid");
+//    }
     
     uint colorComponents = 3;
     uint byteAlignment = 4;

@@ -16,11 +16,10 @@
 #include "WindowsBitmapEncoder.hpp"
 #include "BitmapIterator.hpp"
 
-
 using namespace BitmapGraphics;
 using HBitmapDecoder = std::shared_ptr<IBitmapDecoder>;
 using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
-
+using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
 
 namespace
 {
@@ -72,13 +71,13 @@ TEST(invalidEncoder, CodecLibrary)
         CHECK(true);
     }
 }
-/*
+
 TEST(createEncoderViaMimeType, CodecLibrary)
 {
     setUp();
-    
+
     Bitmap nullBitmap{0, 0};
-    HBitmapIterator iterator {nullBitmap.createIterator()};
+    HBitmapIterator iterator = std::make_shared<BitmapIterator>(nullBitmap);
     HBitmapEncoder encoder {theCodecLibrary->createEncoder(msBmp, iterator)};
 
     CHECK(dynamic_cast<WindowsBitmapEncoder*>(encoder.get()));
@@ -91,7 +90,7 @@ TEST(failedCreateEncoderViaMimeType, CodecLibrary)
     setUp();
     
     Bitmap nullBitmap{0, 0};
-    HBitmapIterator iterator {nullBitmap.createIterator()};
+    HBitmapIterator iterator = std::make_shared<BitmapIterator>(nullBitmap);
     
     try
     {
@@ -107,17 +106,17 @@ TEST(failedCreateEncoderViaMimeType, CodecLibrary)
     tearDown();
 }
 
-TEST(createDecoderViaMimeType, CodecLibrary)
-{
-    setUp();
-
-    std::stringstream ss;
-    HBitmapDecoder decoder {theCodecLibrary->createDecoder(msBmp, ss)};
-
-    CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
-
-    tearDown();
-}
+//TEST(createDecoderViaMimeType, CodecLibrary)
+//{
+//    setUp();
+//
+//    std::stringstream ss;
+//    HBitmapDecoder decoder {theCodecLibrary->createDecoder(msBmp, ss)};
+//
+//    CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
+//
+//    tearDown();
+//}
 
 TEST(createFailedDecoderViaMimeType, CodecLibrary)
 {
@@ -145,7 +144,7 @@ TEST(createDecoderAutoDetermine, CodecLibrary)
 
     std::ifstream inFile{"basic.bmp", std::ios::binary};
     CHECK_EQUAL(0, !inFile);
-    HBitmapDecoder decoder {theCodecLibrary->createDecoder(inFile)};
+    HBitmapDecoder decoder {theCodecLibrary->createDecoder("", inFile)};
 
     CHECK(decoder.get());
     CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
@@ -160,7 +159,7 @@ TEST(windowsBitmapDecodeEncode, CodecLibrary)
     std::ifstream inFile{"basic.bmp", std::ios::binary};
     CHECK_EQUAL(0, !inFile);
     
-    HBitmapDecoder decoder {theCodecLibrary->createDecoder(inFile)};
+    HBitmapDecoder decoder {theCodecLibrary->createDecoder("", inFile)};
     HBitmapIterator iterator {decoder->createIterator()};
     
     CHECK(iterator.get());
@@ -175,7 +174,7 @@ TEST(windowsBitmapDecodeEncode, CodecLibrary)
 
     tearDown();
 }
-
+/*
 TEST(brightnessDecoratorIterator, CodecLibrary)
 {
     setUp();

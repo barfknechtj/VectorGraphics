@@ -17,6 +17,7 @@
 
 namespace BitmapGraphics
 {
+    
     class Bitmap
     {
     public:
@@ -35,7 +36,7 @@ namespace BitmapGraphics
         typedef ScanLineCollection::iterator ScanLineIterator;
         
         Bitmap() = default;
-        Bitmap(const int& width, const int& height, std::istream& sourceStream);
+        Bitmap(const int& width, const int& height, std::istream& sourceStream = std::cin);
         ~Bitmap() = default;
         
         ScanLineIterator begin() {return myScanLineCollection.begin();}

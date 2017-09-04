@@ -17,6 +17,8 @@
 
 namespace BitmapGraphics
 {
+//    class Bitmap;
+    
     class IBitmapIterator : public std::iterator<std::forward_iterator_tag, Color>
     {
     public:

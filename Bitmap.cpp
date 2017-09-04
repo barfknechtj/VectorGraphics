@@ -47,8 +47,6 @@ int Bitmap::calcNumOfPads() const
        aligned. Caluclate number of pads used to construct
        bitmap  */
     
-    if(myWidth == 0) {throw std::runtime_error("bitmap width invalid");}
-    
     int colorComponents = 3;
     int byteAlignment = 4;
     int numOfPads = 0;
