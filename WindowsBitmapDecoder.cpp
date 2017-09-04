@@ -17,7 +17,7 @@ WindowsBitmapDecoder::WindowsBitmapDecoder(HBitmap bitmap)
 }
 
 HBitmapDecoder WindowsBitmapDecoder::clone(std::istream& sourceStream)
-{    
+{
     // read from bitmap header
     HBitmapHeader hHeader = std::make_shared<WindowsBitmapHeader>(sourceStream);
     
@@ -33,7 +33,6 @@ HBitmapDecoder WindowsBitmapDecoder::clone(std::istream& sourceStream)
     return hDecoder;
 }
 
-// TODO: find
 bool WindowsBitmapDecoder::isSupported(std::istream& sourceStream) const
 {
     int var1 = sourceStream.peek();
@@ -45,13 +44,9 @@ bool WindowsBitmapDecoder::isSupported(std::istream& sourceStream) const
     
     /* ASCII codes 66 and 77 indicate "BM" which identifies
        binary as a WindowsBitmap */
-    if (var1 == 66 && var2 == 77)
-    {
-        return true;
-    }
-    else {
-        return false;
-    }
+    bool isSupported = (var1 == 66 && var2 == 77) ? true : false;
+    
+    return isSupported;
 }
 
 HBitmapIterator WindowsBitmapDecoder::createIterator()
