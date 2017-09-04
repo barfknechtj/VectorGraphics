@@ -9,7 +9,6 @@
 #include "CodecLibrary.hpp"
 
 using namespace BitmapGraphics;
-using HBitmap = std::shared_ptr<Bitmap>;
 using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
 using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
 

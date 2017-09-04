@@ -23,7 +23,6 @@ namespace BitmapGraphics
     class WindowsBitmapDecoder : public IBitmapDecoder
     {
     private:
-        using HBitmap = std::shared_ptr<Bitmap>;
         
         std::string myMimeType;
         HBitmap hBitmap;

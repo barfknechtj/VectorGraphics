@@ -52,6 +52,8 @@ namespace BitmapGraphics
         int getWidth() const {return static_cast<int>(myWidth);}
         int getHeight() const {return static_cast<int>(myHeight);}
     };
+    
+    using HBitmap = std::shared_ptr<Bitmap>;
 }
 
 #endif /* Bitmap_hpp */

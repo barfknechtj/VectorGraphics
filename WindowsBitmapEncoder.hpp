@@ -32,9 +32,6 @@ namespace BitmapGraphics
     
     class WindowsBitmapEncoder : public IBitmapEncoder
     {
-    private:
-        using HBitmap = std::shared_ptr<Bitmap>;
-        
     public:
         WindowsBitmapEncoder(HBitmapIterator bitmapIter = nullptr,
                              const std::string& mimeType = "image/x-ms-bmp");
