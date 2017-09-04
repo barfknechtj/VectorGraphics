@@ -70,6 +70,8 @@ namespace BitmapGraphics
         const static Binary::DoubleWord numberOfColors;
         const static Binary::DoubleWord numberOfImportantColors;
     };
+    
+    using HBitmapHeader = std::shared_ptr<WindowsBitmapHeader>;
 }
 
 #endif /* WindowsBitmapHeader_hpp */

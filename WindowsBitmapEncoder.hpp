@@ -33,7 +33,6 @@ namespace BitmapGraphics
     class WindowsBitmapEncoder : public IBitmapEncoder
     {
     private:
-        using HBitmapHeader = std::shared_ptr<WindowsBitmapHeader>;
         using HBitmap = std::shared_ptr<Bitmap>;
         
     public:
