@@ -10,7 +10,6 @@
 #include "WindowsBitmapHeader.hpp"
 
 using namespace BitmapGraphics;
-using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
 
 WindowsBitmapDecoder::WindowsBitmapDecoder(HBitmap bitmap)
     : hBitmap(bitmap)

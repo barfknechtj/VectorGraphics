@@ -13,7 +13,6 @@
 #include "BitmapIterator.hpp"
 
 using namespace BitmapGraphics;
-using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
 
 TEST(endOfScanLine, BitmapIterator)
 {

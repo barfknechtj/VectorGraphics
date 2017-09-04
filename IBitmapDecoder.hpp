@@ -16,9 +16,7 @@ namespace BitmapGraphics
     
     class IBitmapDecoder
     {
-    public:
-        using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
-        
+    public:        
         virtual ~IBitmapDecoder() = default;
         virtual HBitmapDecoder clone(std::istream& sourceStream) = 0;
         virtual HBitmapIterator createIterator() = 0;

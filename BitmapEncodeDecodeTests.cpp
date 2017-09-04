@@ -16,8 +16,6 @@
 
 using namespace BitmapGraphics;
 using HBitmapEncoder = std::shared_ptr<IBitmapEncoder>;
-using HBitmapIterator = std::shared_ptr<IBitmapIterator>;
-
 
 TEST(createDecoder, WindowsBitmapDecoder)
 {

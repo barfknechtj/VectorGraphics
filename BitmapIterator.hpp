@@ -17,23 +17,7 @@
 #include "IBitmapIterator.hpp"
 
 namespace BitmapGraphics
-{
-//    class IBitmapIterator : public std::iterator<std::forward_iterator_tag, Color>
-//    {
-//    public:
-//        virtual ~IBitmapIterator() = default;
-//        
-//        virtual void nextScanLine() = 0;
-//        virtual bool isEndOfImage() = 0;
-//        
-//        virtual void nextPixel() = 0;
-//        virtual bool isEndOfScanLine() = 0;
-//        
-//        virtual Color getColor() const = 0;
-//        virtual uint getBitmapWidth() const = 0;
-//        virtual uint getBitmapHeight() const = 0;
-//    };
-    
+{    
     class BitmapIterator : public IBitmapIterator
     {
     public:
