@@ -103,7 +103,7 @@ uint WindowsBitmapEncoder::_calcNumOfPads() const
     return numOfPads;
 }
 
-uint WindowsBitmapEncoder::_calcFileSize()
+uint WindowsBitmapEncoder::_calcFileSize() const
 {
     // without color table
     uint headerSize{54}; // without color table

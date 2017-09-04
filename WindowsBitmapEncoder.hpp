@@ -53,7 +53,7 @@ namespace BitmapGraphics
         void _encodeHeaderToStream(std::ofstream& destinationStream);
         void _encodeBitmapToStream(std::ofstream& destinationStream);
         uint _calcNumOfPads() const;
-        uint _calcFileSize();
+        uint _calcFileSize() const;
     };
 }
 
