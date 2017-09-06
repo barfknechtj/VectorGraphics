@@ -22,7 +22,7 @@ namespace BitmapGraphics
     class WindowsBitmapEncoder : public IBitmapEncoder
     {
     public:
-        WindowsBitmapEncoder(HBitmapIterator bitmapIter = nullptr);
+        WindowsBitmapEncoder();
         ~WindowsBitmapEncoder() = default;
         
         HBitmapEncoder clone(HBitmapIterator& hBitmapIter) override;
@@ -34,6 +34,7 @@ namespace BitmapGraphics
         HBitmapIterator hBitmapIter;
         HBitmapHeader hBitmapHeader;
         
+        WindowsBitmapEncoder(HBitmapIterator bitmapIter);
         void _encodeHeaderToStream(std::ostream& destinationStream);
         void _encodeBitmapToStream(std::ostream& destinationStream);
         uint _calcNumOfPads() const;

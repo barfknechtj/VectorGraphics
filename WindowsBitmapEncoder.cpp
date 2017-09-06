@@ -13,35 +13,14 @@ using namespace BitmapGraphics;
 
 const std::string WindowsBitmapEncoder::myMimeType{"image/x-ms-bmp"};
 
-WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter)
-    : hBitmapIter(bitmapIter)
+WindowsBitmapEncoder::WindowsBitmapEncoder()
+    : hBitmapIter(nullptr), hBitmapHeader(nullptr)
 {
-    // initialize header for encoder, ignored if creating prototype
-    if(bitmapIter != nullptr)
-    {
-        // retrieve/calculate bitmap sizing from bitmapIterator
-        const uint bitmapWidth{bitmapIter->getBitmapWidth()};
-        const uint bitmapHeight{bitmapIter->getBitmapHeight()};
-        const uint headersize{54};
-        const uint fileSize{_calcFileSize()};
-        const uint compressionSize{fileSize - headersize};
-        
-        // assumed header settings
-        const uint horizontalPixelsPerMeter{2834};
-        const uint verticalPixelsPerMeter{2834};
-    
-        hBitmapHeader = std::make_shared<WindowsBitmapHeader>(fileSize,
-                                                              bitmapWidth,
-                                                              bitmapHeight,
-                                                              compressionSize,
-                                                              horizontalPixelsPerMeter,
-                                                              verticalPixelsPerMeter);
-    }
 }
 
 HBitmapEncoder WindowsBitmapEncoder::clone(HBitmapIterator& hBitmapIter)
 {
-    return std::make_shared<WindowsBitmapEncoder>(hBitmapIter);
+    return HBitmapEncoder{new WindowsBitmapEncoder(hBitmapIter)};
 }
 
 void WindowsBitmapEncoder::_encodeHeaderToStream(std::ostream& destinationStream)
@@ -76,6 +55,32 @@ void WindowsBitmapEncoder::encodeToStream(std::ostream& destinationStream)
         _encodeHeaderToStream(destinationStream);
         _encodeBitmapToStream(destinationStream);
     }   
+}
+
+WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter)
+: hBitmapIter(bitmapIter)
+{
+    // initialize header for encoder, ignored if creating prototype
+    if(bitmapIter != nullptr)
+    {
+        // retrieve/calculate bitmap sizing from bitmapIterator
+        const uint bitmapWidth{bitmapIter->getBitmapWidth()};
+        const uint bitmapHeight{bitmapIter->getBitmapHeight()};
+        const uint headersize{54};
+        const uint fileSize{_calcFileSize()};
+        const uint compressionSize{fileSize - headersize};
+        
+        // assumed header settings
+        const uint horizontalPixelsPerMeter{2834};
+        const uint verticalPixelsPerMeter{2834};
+        
+        hBitmapHeader = std::make_shared<WindowsBitmapHeader>(fileSize,
+                                                              bitmapWidth,
+                                                              bitmapHeight,
+                                                              compressionSize,
+                                                              horizontalPixelsPerMeter,
+                                                              verticalPixelsPerMeter);
+    }
 }
 
 uint WindowsBitmapEncoder::_calcNumOfPads() const

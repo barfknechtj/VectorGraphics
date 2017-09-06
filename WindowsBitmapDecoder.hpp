@@ -22,20 +22,23 @@ namespace BitmapGraphics
 {    
     class WindowsBitmapDecoder : public IBitmapDecoder
     {
-    private:
-        
-        std::string myMimeType;
-        HBitmap hBitmap;
-    
     public:
-        WindowsBitmapDecoder(HBitmap bitmap = nullptr);
+        WindowsBitmapDecoder();
         ~WindowsBitmapDecoder() = default;
         
         HBitmapDecoder clone(std::istream& sourceStream) override;
         HBitmapIterator createIterator() override;
-        void setMimeType(const std::string& mimeType) override {myMimeType = mimeType;}
         std::string getMimeType() const override {return myMimeType;};
         bool isSupported(std::istream& sourceStream) const override;
+        
+    private:
+        static const std::string myMimeType;
+        std::istream& myBitmapStream;
+        HBitmap hBitmap;
+        HBitmapHeader hBitmapHeader;
+        
+        WindowsBitmapDecoder(std::istream& sourceStream);
+        void _decodeStream();
     };
 }
 

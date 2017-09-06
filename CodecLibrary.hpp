@@ -25,10 +25,15 @@ namespace BitmapGraphics
         CodecLibrary() = default;
         ~CodecLibrary() = default;
 
-        HBitmapDecoder createDecoder(std::istream& bitmapStream = std::cin,
-                                     const std::string& mimeType = "");
+        // creates decoder based off file identification in stream
+        HBitmapDecoder createDecoder(std::istream& bitmapStream);
+        
+        // creates decoder based off mimeType
+        HBitmapDecoder createDecoder(std::istream& bitmapStream,
+                                     const std::string& mimeType);
+        
         HBitmapEncoder createEncoder(const std::string& mimeType,
-                                     HBitmapIterator hIter);
+                                     HBitmapIterator hBitmapIter);
 
         void registerDecoder(HBitmapDecoder hDecoder);
         void registerEncoder(HBitmapEncoder hEncoder);

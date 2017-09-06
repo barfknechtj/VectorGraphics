@@ -6,31 +6,28 @@
 //  Copyright © 2017 Jared Barfknecht. All rights reserved.
 //
 
+#include <sstream>
 #include "WindowsBitmapDecoder.hpp"
 #include "WindowsBitmapHeader.hpp"
 
 using namespace BitmapGraphics;
 
-WindowsBitmapDecoder::WindowsBitmapDecoder(HBitmap bitmap)
-    : hBitmap(bitmap)
+const std::string WindowsBitmapDecoder::myMimeType{"image/x-ms-bmp"};
+
+WindowsBitmapDecoder::WindowsBitmapDecoder()
+    : myBitmapStream(std::cin)
+{
+    myBitmapStream.setstate(std::ios::badbit);
+}
+
+WindowsBitmapDecoder::WindowsBitmapDecoder(std::istream& sourceStream)
+    : myBitmapStream(sourceStream)
 {
 }
 
 HBitmapDecoder WindowsBitmapDecoder::clone(std::istream& sourceStream)
 {
-    // read from bitmap header
-    HBitmapHeader hHeader = std::make_shared<WindowsBitmapHeader>(sourceStream);
-    
-    // read from bitmap pixel data
-    HBitmap hBitmap = std::make_shared<Bitmap>(hHeader->getBitmapWidth(),
-                                               hHeader->getBitmapHeight(),
-                                               sourceStream);
-    
-    // create decoder
-    HBitmapDecoder hDecoder = std::make_shared<WindowsBitmapDecoder>(hBitmap);
-    hDecoder->setMimeType("image/x-ms-bmp");
-    
-    return hDecoder;
+    return HBitmapDecoder{new WindowsBitmapDecoder(sourceStream)};
 }
 
 bool WindowsBitmapDecoder::isSupported(std::istream& sourceStream) const
@@ -51,11 +48,22 @@ bool WindowsBitmapDecoder::isSupported(std::istream& sourceStream) const
 
 HBitmapIterator WindowsBitmapDecoder::createIterator()
 {
-    if(!hBitmap)
+    if(myBitmapStream.bad())
     {
         throw std::runtime_error("User must specify bitmap to decode");
     }
     else {
+        _decodeStream();
         return hBitmap->createIterator();
     }
 }
+
+void WindowsBitmapDecoder::_decodeStream()
+{
+    hBitmapHeader = std::make_shared<WindowsBitmapHeader>(myBitmapStream);
+    hBitmap = std::make_shared<Bitmap>(hBitmapHeader->getBitmapWidth(),
+                                       hBitmapHeader->getBitmapHeight(),
+                                       myBitmapStream);
+}
+
+

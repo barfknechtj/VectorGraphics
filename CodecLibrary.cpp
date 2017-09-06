@@ -10,52 +10,48 @@
 
 using namespace BitmapGraphics;
 
-HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream,
-                                           const std::string& mimeType)
+// creates decoder based off file identification in stream
+HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream)
 {
-    // other decoders can be created from here based off their MimeType
-    if(mimeType == "image/x-ms-bmp")
+    for(const auto& decoder : myDecoders)
     {
-        if(bitmapStream.rdbuf()->in_avail())
+        if(decoder->isSupported(bitmapStream))
         {
-            WindowsBitmapHeader header(bitmapStream);
-            HBitmap hBitmap = std::make_shared<Bitmap>(header.getBitmapWidth(),
-                                                       header.getBitmapHeight(),
-                                                       bitmapStream);
-            return std::make_shared<WindowsBitmapDecoder>(hBitmap);
-        } else {
-            HBitmap hBitmap = std::make_shared<Bitmap>();
-            return std::make_shared<WindowsBitmapDecoder>(hBitmap);
-        }
-    }
-    // auto lookup from registered decoders
-    else if(mimeType == "") {
-        
-        for(auto decoderIter = myDecoders.begin(); decoderIter != myDecoders.end(); ++decoderIter)
-        {
-            WindowsBitmapDecoder* decoder = dynamic_cast<WindowsBitmapDecoder*>(decoderIter->get());
-            if(decoder->isSupported(bitmapStream))
-            {
-                return decoder->clone(bitmapStream);
-            }
+           return decoder->clone(bitmapStream);
         }
     }
     
-    // unsupported
-    throw std::runtime_error("Decoder for provided MimeType and/or file not supported");
+    throw std::runtime_error("Decoder for provided file not supported");
 }
 
-HBitmapEncoder CodecLibrary::createEncoder(const std::string& mimeType,
-                                           HBitmapIterator hIter)
+// creates decoder based off mimeType
+HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream,
+                                           const std::string& mimeType)
 {
-    // other encoders can be created from here based off their MimeType
-    if(mimeType == "image/x-ms-bmp")
+    for(const auto& decoder : myDecoders)
     {
-        return std::make_shared<WindowsBitmapEncoder>(hIter, mimeType);
+        if(decoder->getMimeType() == mimeType)
+        {
+            return decoder->clone(bitmapStream);
+        }
     }
-    else{
-        throw std::runtime_error("Encoder for provided MimeType not supported");
+
+    throw std::runtime_error("Decoder for provided MimeType not supported");
+}
+
+// creates encoder based off mimeType
+HBitmapEncoder CodecLibrary::createEncoder(const std::string& mimeType,
+                                           HBitmapIterator hBitmapIter)
+{
+    for(const auto& encoder : myEncoders)
+    {
+        if(encoder->getMimeType() == mimeType)
+        {
+            return encoder->clone(hBitmapIter);
+        }
     }
+    
+    throw std::runtime_error("Encoder for provided MimeType not supported");
 }
 
 void CodecLibrary::registerDecoder(HBitmapDecoder hDecoder)
