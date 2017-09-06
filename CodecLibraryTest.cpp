@@ -10,7 +10,7 @@
 #include <memory>
 #include "TestHarness.h"
 #include "CodecLibrary.hpp"
-//#include "BrightnessDecorator.h"
+#include "BrightnessDecorator.hpp"
 //#include "ColorInversionDecorator.h"
 #include "WindowsBitmapDecoder.hpp"
 #include "WindowsBitmapEncoder.hpp"
@@ -170,7 +170,7 @@ TEST(windowsBitmapDecodeEncode, CodecLibrary)
 
     tearDown();
 }
-/*
+
 TEST(brightnessDecoratorIterator, CodecLibrary)
 {
     setUp();
@@ -190,11 +190,10 @@ TEST(brightnessDecoratorIterator, CodecLibrary)
 
     std::ofstream outFile{"output_basicBrightnessAdjusted.bmp", std::ios::binary};
     encoder->encodeToStream(outFile);
-    // TODO: file compare input/output
 
     tearDown();
 }
-
+/*
 TEST(colorInvertDecoratorIterator, CodecLibrary)
 {
     setUp();
