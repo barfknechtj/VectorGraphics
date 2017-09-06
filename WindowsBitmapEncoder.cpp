@@ -11,9 +11,10 @@
 using namespace Binary;
 using namespace BitmapGraphics;
 
-WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter,
-                                           const std::string& mimeType)
-    : hBitmapIter(bitmapIter), myMimeType(mimeType)
+const std::string WindowsBitmapEncoder::myMimeType{"image/x-ms-bmp"};
+
+WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter)
+    : hBitmapIter(bitmapIter)
 {
     // initialize header for encoder, ignored if creating prototype
     if(bitmapIter != nullptr)
@@ -39,10 +40,8 @@ WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter,
 }
 
 HBitmapEncoder WindowsBitmapEncoder::clone(HBitmapIterator& hBitmapIter)
-{    
-    HBitmapEncoder hEncoder = std::make_shared<WindowsBitmapEncoder>(hBitmapIter);
-    
-    return hEncoder;
+{
+    return std::make_shared<WindowsBitmapEncoder>(hBitmapIter);
 }
 
 void WindowsBitmapEncoder::_encodeHeaderToStream(std::ostream& destinationStream)
@@ -86,12 +85,6 @@ uint WindowsBitmapEncoder::_calcNumOfPads() const
      bitmap  */
     
     uint bitmapWidth{hBitmapIter->getBitmapWidth()};
-    
-//    if(bitmapWidth == 0)
-//    {
-//        throw std::runtime_error("bitmap width invalid");
-//    }
-    
     uint colorComponents = 3;
     uint byteAlignment = 4;
     uint numOfPads = 0;

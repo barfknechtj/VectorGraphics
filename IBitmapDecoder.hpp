@@ -20,7 +20,6 @@ namespace BitmapGraphics
         virtual ~IBitmapDecoder() = default;
         virtual HBitmapDecoder clone(std::istream& sourceStream) = 0;
         virtual HBitmapIterator createIterator() = 0;
-        virtual void setMimeType(const std::string& mimeType) = 0;
         virtual std::string getMimeType() const = 0;
         virtual bool isSupported(std::istream& sourceStream) const = 0;
     };
