@@ -25,8 +25,8 @@ HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream)
 }
 
 // creates decoder based off mimeType
-HBitmapDecoder CodecLibrary::createDecoder(std::istream& bitmapStream,
-                                           const std::string& mimeType)
+HBitmapDecoder CodecLibrary::createDecoder(const std::string& mimeType,
+                                           std::istream& bitmapStream)
 {
     for(const auto& decoder : myDecoders)
     {

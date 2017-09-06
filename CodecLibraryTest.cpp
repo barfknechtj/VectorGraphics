@@ -108,7 +108,7 @@ TEST(createDecoderViaMimeType, CodecLibrary)
     setUp();
 
     std::stringstream ss;
-    HBitmapDecoder decoder {theCodecLibrary->createDecoder(ss, msBmp)};
+    HBitmapDecoder decoder {theCodecLibrary->createDecoder(msBmp, ss)};
 
     CHECK(dynamic_cast<WindowsBitmapDecoder*>(decoder.get()));
 
@@ -123,7 +123,7 @@ TEST(createFailedDecoderViaMimeType, CodecLibrary)
     
     try
     {
-        HBitmapDecoder decoder {theCodecLibrary->createDecoder(ss, "image/unsupported-type")};
+        HBitmapDecoder decoder {theCodecLibrary->createDecoder("image/unsupported-type", ss)};
         CHECK(false);
     }
     catch (const std::exception& exc)
