@@ -40,7 +40,19 @@ void BitmapIterator::nextPixel()
     ++_colorIter;
 }
 
-bool BitmapGraphics::BitmapIterator::isEndOfScanLine()
+bool BitmapIterator::isEndOfScanLine()
 {
     return _colorIter == _scanLineIter->end();
+}
+
+void BitmapIterator::begin()
+{
+    _scanLineIter = myBitmap.begin();
+    _colorIter = _scanLineIter->begin();
+}
+
+void BitmapIterator::end()
+{
+    _scanLineIter = (--myBitmap.end());
+    _colorIter = _scanLineIter->end();
 }

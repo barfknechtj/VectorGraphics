@@ -30,6 +30,10 @@ namespace BitmapGraphics
         void nextPixel() override;
         bool isEndOfScanLine() override;
         
+        void begin() override;
+        void end() override;
+        
+        void setColor(Color const& color) override {*_colorIter = color;}
         Color getColor() const override {return *_colorIter;}
         uint getBitmapWidth() const override {return myBitmap.getWidth();}
         uint getBitmapHeight() const override {return myBitmap.getHeight();}

@@ -43,6 +43,22 @@ Bitmap::Bitmap(const int& width, const int& height, std::istream& sourceStream)
     }
 }
 
+Bitmap::Bitmap(const int& width, const int& height, const Color& backgroundColor)
+    : myWidth(width), myHeight(height), myScanLineCollection()
+{    
+    for (auto row = 0; row < height; ++row)
+    {
+        ScanLine scanLine;
+        
+        for (auto column = 0; column < width; ++column)
+        {
+            scanLine.push_back(backgroundColor);
+        }
+        
+        myScanLineCollection.push_back(std::move(scanLine));
+    }
+}
+
 int Bitmap::calcNumOfPads() const
 {
     /* 0x0 is inserted into bitmaps to make them 4-byte

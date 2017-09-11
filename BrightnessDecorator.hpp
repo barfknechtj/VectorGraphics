@@ -29,6 +29,10 @@ namespace BitmapGraphics
         virtual void nextPixel();
         virtual bool isEndOfScanLine();
         
+        virtual void begin();
+        virtual void end();
+        
+        virtual void setColor(Color const& color);
         virtual Color getColor() const;
         virtual uint getBitmapWidth() const;
         virtual uint getBitmapHeight() const;

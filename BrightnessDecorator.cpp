@@ -31,9 +31,25 @@ void BrightnessDecorator::nextPixel()
 {
     _myIter->nextPixel();
 }
+
 bool BrightnessDecorator::isEndOfScanLine()
 {
     return _myIter->isEndOfScanLine();
+}
+
+void BrightnessDecorator::begin()
+{
+    return _myIter->begin();
+}
+
+void BrightnessDecorator::end()
+{
+    return _myIter->end();
+}
+
+void BrightnessDecorator::setColor(Color const& color)
+{
+    _myIter->setColor(color);
 }
 
 Color BrightnessDecorator::getColor() const
