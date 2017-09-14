@@ -14,10 +14,11 @@
 #include "Point.h"
 #include "Color.hpp"
 #include "Bitmap.hpp"
+#include "ICanvas.hpp"
 
 namespace BitmapGraphics
 {
-    class BasicCanvas
+    class BasicCanvas : public ICanvas
     {
     private:
         HBitmap hCanvas;

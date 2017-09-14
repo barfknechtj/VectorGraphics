@@ -1,0 +1,32 @@
+//
+//  SquarePen.hpp
+//  Assignment2
+//
+//  Created by Jared Barfknecht on 9/11/17.
+//  Copyright © 2017 Jared Barfknecht. All rights reserved.
+//
+
+#ifndef SquarePen_hpp
+#define SquarePen_hpp
+
+#include <stdio.h>
+#include "SquareStroke.hpp"
+#include "Point.h"
+
+namespace BitmapGraphics
+{
+    class SquarePen : public IPen
+    {
+    public:
+        SquarePen(const SquareStroke& stroke);
+        ~SquarePen() = default;
+        
+        void drawPoint(const HCanvas& canvas,
+                       const VG::Point& point);
+        
+    private:
+        SquareStroke myStroke;
+    };
+}
+
+#endif /* SquarePen_hpp */

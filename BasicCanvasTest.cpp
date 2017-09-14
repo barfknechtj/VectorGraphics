@@ -11,6 +11,7 @@
 #include "BasicCanvas.hpp"
 #include "Color.hpp"
 #include "WindowsBitmapEncoder.hpp"
+#include "WindowsBitmapDecoder.hpp"
 
 using namespace BitmapGraphics;
 
@@ -119,10 +120,11 @@ TEST(IBitmapIterator, BasicCanvas)
 
 TEST(CanvasBitmap, BasicCanvas)
 {
-    Color backColor{255, 255, 255};
-    BasicCanvas canvas(10, 10, backColor);
+    Color backgroundColor{255, 255, 255};
+    Color uniquePixel{0, 255, 0};
+    BasicCanvas canvas(10, 10, backgroundColor);
     
-    canvas.setPixelColor(VG::Point(1, 1), Color{0, 255, 0});
+    canvas.setPixelColor(VG::Point(0, 0), uniquePixel);
     
     HBitmapIterator canvasIterator = canvas.createBitmapIterator();
     
@@ -136,7 +138,29 @@ TEST(CanvasBitmap, BasicCanvas)
     encoder->encodeToStream(outputStream);
     outputStream.close();
     
+    // read back in
+    std::ifstream bitmapStream{"BasicCanvas10x10.bmp", std::ios::binary};
+    CHECK(bitmapStream.is_open());
+    
+    WindowsBitmapDecoder decoderPrototype{};
+    HBitmapDecoder decoder{decoderPrototype.clone(bitmapStream)};
+    HBitmapIterator bitmapIterator = decoder->createIterator();
+    
     /* Verify BasicCanvas10x10 is 10x10 white image with a single green pixel
-       in the bottom left corner (since a bitmap actually needs to be stored
-       with ScanLines bottom to top and the canvas is not */
+     in the bottom left corner (since a bitmap actually needs to be stored
+     with ScanLines bottom to top and the canvas is not */
+    CHECK_EQUAL(true, uniquePixel == bitmapIterator->getColor());
+    bitmapIterator->nextPixel();
+    
+    while (!bitmapIterator->isEndOfImage())
+    {
+        while (!bitmapIterator->isEndOfScanLine())
+        {
+            // all other pixels should be background color
+            CHECK_EQUAL(true, backgroundColor == bitmapIterator->getColor());
+            bitmapIterator->nextPixel();
+        }
+        
+        bitmapIterator->nextScanLine();
+    }
 }
