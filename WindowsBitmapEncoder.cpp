@@ -61,7 +61,7 @@ WindowsBitmapEncoder::WindowsBitmapEncoder(HBitmapIterator bitmapIter)
 : hBitmapIter(bitmapIter)
 {
     // initialize header for encoder, ignored if creating prototype
-    if(bitmapIter != nullptr)
+    if(hBitmapIter != nullptr)
     {
         // retrieve/calculate bitmap sizing from bitmapIterator
         const uint bitmapWidth{bitmapIter->getBitmapWidth()};
