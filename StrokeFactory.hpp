@@ -10,5 +10,21 @@
 #define StrokeFactory_hpp
 
 #include <stdio.h>
+#include "IStroke.hpp"
+
+namespace BitmapGraphics
+{
+    class StrokeFactory
+    {
+    public:
+        static HStroke createStroke(const std::string& strokeType = "square",
+                                    const int& size = 1,
+                                    const Color& color = Color{0, 0, 0});
+        
+    private:
+        StrokeFactory() = delete;
+        ~StrokeFactory() = delete;
+    };
+}
 
 #endif /* StrokeFactory_hpp */

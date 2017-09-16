@@ -7,3 +7,23 @@
 //
 
 #include "StrokeFactory.hpp"
+#include "SquareStroke.hpp"
+#include "SlashStroke.hpp"
+
+using namespace BitmapGraphics;
+
+HStroke StrokeFactory::createStroke(const std::string& strokeType,
+                                    const int& size,
+                                    const Color& color)
+{
+    if(strokeType == "square")
+    {
+        return HStroke{new SquareStroke(size, color)};
+    }
+    else if (strokeType == "slash")
+    {
+        return HStroke{new SlashStroke(size, color)};
+    }
+    
+    throw std::runtime_error("Invalid stroke type specified");
+}
