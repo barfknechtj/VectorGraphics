@@ -17,7 +17,11 @@
 
 namespace Xml
 {
+    class Element;
+    
     using AttributeMap = std::map<std::string, std::string>;
+    using ChildElements = std::vector<std::shared_ptr<Element>>;
+    using HElement = std::shared_ptr<Element>;
     
     class Element
     {
@@ -34,22 +38,18 @@ namespace Xml
         std::string getAttribute(const std::string& key) const;
         std::string getAttribute(const std::string&& key) const;
         AttributeMap const& getAttributes() const;
-        std::vector<std::shared_ptr<Element>> const& getChildElements() const;
+        ChildElements const& getChildElements() const;
         bool hasChildren() const;
         
         void setName(const std::string& name);
         void addAttribute(std::string key, std::string value);
-        std::shared_ptr<Element> addChildElement(std::string childElementName);
+        HElement addChildElement(std::string childElementName);
         
     private:
         std::string myName;
         AttributeMap myAttributes;
-        std::vector<std::shared_ptr<Element>> myChildElements;
+        ChildElements myChildElements;
     };
-
-    
-    using ChildElements = std::vector<std::shared_ptr<Element>>;
-    using HElement = std::shared_ptr<Element>;
 }
 
 #endif /* Element_hpp */

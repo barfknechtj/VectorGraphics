@@ -8,7 +8,6 @@
 
 #include "Element.hpp"
 
-//------------------------------------------------------------------------
 Xml::Element::Element(const std::string& name)
 : myName(name)
 {
@@ -58,5 +57,5 @@ std::shared_ptr<Xml::Element> Xml::Element::addChildElement(std::string childEle
 
 bool Xml::Element::hasChildren() const
 {
-    return !(myChildElements.empty());
+    return (!myChildElements.empty());
 }
