@@ -8,6 +8,18 @@
 
 #include "Color.hpp"
 
+BitmapGraphics::Color::Color(const std::string& hexColorValue)
+{
+    if(hexColorValue.length() != 6)
+    {
+        throw std::runtime_error("Invalid hex value given for color");
+    }
+
+    red = std::stoi(hexColorValue.substr(0, 2), 0, 16);
+    green = std::stoi(hexColorValue.substr(2, 2), 0, 16);
+    blue = std::stoi(hexColorValue.substr(4, 2), 0, 16);
+}
+
 BitmapGraphics::Color BitmapGraphics::Color::read(std::istream& is)
 {
     BitmapGraphics::Color color;

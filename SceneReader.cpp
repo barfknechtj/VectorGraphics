@@ -7,7 +7,11 @@
 //
 
 #include "SceneReader.hpp"
+#include "StrokeFactory.hpp"
 
+using namespace Xml;
+
+// TODO: reduce nested calls with separate subfunctions
 Framework::Scene Framework::SceneReader::readScene(const Xml::Element& sceneElement)
 {
     Scene scene;
@@ -37,11 +41,29 @@ Framework::Scene Framework::SceneReader::readScene(const Xml::Element& sceneElem
                     vg->openShape();
                 }
                 
-                for (auto pointElement : vectorGraphicElement->getChildElements())
+                ChildElements vgChildren = vectorGraphicElement->getChildElements();
+                ChildElements::iterator vgChildIter = vgChildren.begin();
+                
+                if(vgChildIter->get()->getName() == "Stroke")
                 {
-                    vg->addPoint(Point(std::stoi(pointElement->getAttribute("x")),
-                                       std::stoi(pointElement->getAttribute("y"))
-                                       ));
+                    vg->setStroke(StrokeFactory::createStroke(vgChildIter->get()->getAttribute("tip"),
+                                                              std::stoi(vgChildIter->get()->getAttribute("size")),
+                                                              Color(vgChildIter->get()->getAttribute("color"))));
+                    
+                    ++vgChildIter;
+                }
+                else
+                {   // default stroke is a single pixel black square
+                    vg->setStroke(StrokeFactory::createStroke());
+                }
+                
+                while(vgChildIter != vgChildren.end())
+                {
+                    vg->addPoint(Point(std::stoi(vgChildIter->get()->getAttribute("x")),
+                                                 std::stoi(vgChildIter->get()->getAttribute("y"))
+                                                 ));
+                    
+                    ++vgChildIter;
                 }
 
                 placedGraphic.moveGraphic(vg);

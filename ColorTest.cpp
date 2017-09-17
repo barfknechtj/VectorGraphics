@@ -32,6 +32,32 @@ TEST(createColorWithZeroes, Color)
     CHECK_EQUAL(0x00, color.getBlue());
 }
 
+TEST(createColorWithString, Color)
+{
+    std::string hexColor = "AABBCC";
+    
+    Color color(hexColor);
+
+    CHECK_EQUAL(0xCC, color.getBlue());
+    CHECK_EQUAL(0xBB, color.getGreen());
+    CHECK_EQUAL(0xAA, color.getRed());
+}
+
+TEST(createColorWithInvalidString, Color)
+{
+    std::string hexColor = "AABBC";
+    try
+    {
+        Color color(hexColor);
+        CHECK(false);
+    }
+    catch (const std::exception& exc)
+    {
+        std::cout << exc.what() << std::endl;
+        CHECK(true);
+    }
+}
+
 TEST(readColor, Color)
 {
     unsigned char colorData[]{ 0x23, 0x24, 0x25, 0 };

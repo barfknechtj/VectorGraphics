@@ -45,6 +45,11 @@ VG::HVectorGraphic const& Framework::PlacedGraphic::getGraphic() const
     return hGraphic;
 }
 
+void Framework::PlacedGraphic::draw(HCanvas& canvas)
+{
+    hGraphic->draw(canvas, placementPoint);
+}
+
 bool Framework::PlacedGraphic::operator==(const PlacedGraphic& rhs) const
 {
     return placementPoint == rhs.placementPoint && hGraphic == rhs.hGraphic;

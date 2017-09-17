@@ -4,8 +4,8 @@
 
 namespace VG
 {
-    VectorGraphic::VectorGraphic() :
-    myShapeStyle{ShapeStyle::Closed}
+    VectorGraphic::VectorGraphic(HStroke stroke) :
+    myShapeStyle{ShapeStyle::Closed}, hStroke(stroke)
     {
     }
     
@@ -97,6 +97,50 @@ namespace VG
         else
         {
             throw std::out_of_range{"index out of range"};
+        }
+    }
+    
+    void VectorGraphic::setStroke(HStroke& stroke)
+    {
+        hStroke = stroke;
+    }
+    
+    void VectorGraphic::setStroke(HStroke&& stroke)
+    {
+        hStroke = std::move(stroke);
+    }
+    
+    // TODO: add support for closed VG's
+    void VectorGraphic::draw(HCanvas& canvas, const Point& offset)
+    {
+        HPen hPen = hStroke->createPen();
+        
+        Points::iterator pointIter = myPath.begin();
+        VG::Point startPoint = *pointIter;
+        ++pointIter;
+        
+        while(pointIter != myPath.end())
+        {
+            VG::Point endPoint = *pointIter;
+            
+            // draw points between startPoint and endPoint
+            LineIterator lineIter(startPoint, endPoint);
+            while(!lineIter.isEnd())
+            {
+                VG::Point point = lineIter.getCurrentPoint();
+                
+                int x0 = point.getX();
+                int y0 = point.getY();
+                
+                int x = x0 + offset.getX();
+                int y = y0 + offset.getY();
+                
+                hPen->drawPoint(canvas, Point(x, y));
+                lineIter.nextPoint();
+            }
+            
+            startPoint = endPoint;
+            ++pointIter;
         }
     }
     

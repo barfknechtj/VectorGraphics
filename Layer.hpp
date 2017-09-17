@@ -45,6 +45,8 @@ namespace Framework
         void pushBack(const PlacedGraphic& placedGraphic);
         void pushBack(PlacedGraphic&& placedGraphic);
         
+        void draw(HCanvas& canvas);
+        
         PlacedGraphicIterator erase(PlacedGraphicIterator it);
         void remove(const PlacedGraphic& placedGraphic);
         

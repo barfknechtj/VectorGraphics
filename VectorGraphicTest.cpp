@@ -2,6 +2,11 @@
 #include "VectorGraphic.h"
 #include "Utilities.h"
 #include "TestHarness.h"
+#include "BasicCanvas.hpp"
+#include "WindowsBitmapEncoder.hpp"
+#include "WindowsBitmapDecoder.hpp"
+
+using namespace BitmapGraphics;
 
 TEST(ctor, VectorGraphic)
 {
@@ -131,4 +136,66 @@ TEST(widthHeight, VectorGraphic)
     vectorGraphic.erasePoint(2);
     CHECK_EQUAL(4, vectorGraphic.getWidth());
     CHECK_EQUAL(2, vectorGraphic.getHeight());
+}
+
+TEST(drawSquareRows, VectorGraphic)
+{
+    Color lineColor{0, 0, 0};
+    HStroke hStroke{new SquareStroke(2, lineColor)};
+    
+    VG::VectorGraphic vectorGraphic(hStroke);
+    vectorGraphic.addPoint(VG::Point{0, 0});
+    vectorGraphic.addPoint(VG::Point{5, 0});
+    
+    Color backgroundColor{255, 255, 255};
+    HCanvas hCanvas{new BasicCanvas(5, 5, backgroundColor)};
+    
+    vectorGraphic.draw(hCanvas, VG::Point(0, 0));
+    
+    HBitmapIterator canvasIterator = hCanvas->createBitmapIterator();
+    
+    WindowsBitmapEncoder encoderPrototype{};
+    HBitmapEncoder encoder {encoderPrototype.clone(canvasIterator)};
+    
+    // Write out the bitmap to a different file with its write() method
+    std::ofstream outputStream{"VectorGraphicSquareRows.bmp", std::ios::binary};
+    CHECK(outputStream.is_open());
+    
+    encoder->encodeToStream(outputStream);
+    outputStream.close();
+    
+    // read back in
+    std::ifstream bitmapStream{"VectorGraphicSquareRows.bmp", std::ios::binary};
+    CHECK(bitmapStream.is_open());
+    
+    WindowsBitmapDecoder decoderPrototype{};
+    HBitmapDecoder decoder{decoderPrototype.clone(bitmapStream)};
+    HBitmapIterator bitmapIterator = decoder->createIterator();
+    
+    /* Verify VectorGraphic5x5.bmp is 5x5 white image with a two rows of black */
+    int scanLineIndex = 0;
+    while(scanLineIndex != 2)
+    {
+        while (!bitmapIterator->isEndOfScanLine())
+        {
+            // first two rows should be black
+            CHECK_EQUAL(true, lineColor == bitmapIterator->getColor());
+            bitmapIterator->nextPixel();
+        }
+        
+        bitmapIterator->nextScanLine();
+        ++scanLineIndex;
+    }
+    
+    while (!bitmapIterator->isEndOfImage())
+    {
+        while (!bitmapIterator->isEndOfScanLine())
+        {
+            // all other pixels should be background color (white)
+            CHECK_EQUAL(true, backgroundColor == bitmapIterator->getColor());
+            bitmapIterator->nextPixel();
+        }
+        
+        bitmapIterator->nextScanLine();
+    }
 }

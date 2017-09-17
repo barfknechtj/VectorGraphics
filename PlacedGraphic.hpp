@@ -12,6 +12,9 @@
 #include <stdio.h>
 #include "Point.h"
 #include "VectorGraphic.h"
+#include "ICanvas.hpp"
+
+using namespace BitmapGraphics;
 
 namespace Framework
 {
@@ -37,6 +40,8 @@ namespace Framework
         void setGraphic(HVectorGraphic const& graphic);
         void moveGraphic(HVectorGraphic& graphic);
         HVectorGraphic const& getGraphic() const;
+        
+        void draw(HCanvas& canvas);
         
         bool operator==(const PlacedGraphic& rhs) const;
         bool operator!=(const PlacedGraphic& rhs) const;

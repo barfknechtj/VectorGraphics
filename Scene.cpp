@@ -64,6 +64,14 @@ void Scene::pushBack(Layer&& layer)
     return;
 }
 
+void Scene::draw(HCanvas& canvas)
+{
+    for (auto layer : myLayers)
+    {
+        layer.draw(canvas);
+    }
+}
+
 Scene::LayerIterator Scene::erase(LayerIterator it)
 {
     return myLayers.erase(it);

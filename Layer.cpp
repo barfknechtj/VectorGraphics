@@ -60,6 +60,14 @@ void Layer::pushBack(const PlacedGraphic& placedGraphic)
     return;
 }
 
+void Layer::draw(HCanvas& canvas)
+{
+    for(auto placedGraphic : myGraphics)
+    {
+        placedGraphic.draw(canvas);
+    }
+}
+
 Layer::PlacedGraphicIterator Layer::erase(PlacedGraphicIterator it)
 {
     return myGraphics.erase(it);

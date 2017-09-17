@@ -45,6 +45,8 @@ namespace Framework
         void pushBack(const Layer& layer);
         void pushBack(Layer&& layer);
         
+        void draw(HCanvas& canvas);
+        
         LayerIterator erase(LayerIterator it);
         void remove(const Layer& layer);
         

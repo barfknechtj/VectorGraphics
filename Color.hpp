@@ -18,6 +18,7 @@ namespace BitmapGraphics
     {
     public:
         Color() = default;
+        Color(const std::string& hexColorValue);
         ~Color() = default;
         
         template<typename T>
