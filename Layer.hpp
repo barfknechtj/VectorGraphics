@@ -60,6 +60,8 @@ namespace Framework
         PlacedGraphicCollection myGraphics;
         std::string myAlias;
     };
+    
+    using HLayer = std::shared_ptr<Layer>;
 }
 
 #endif /* Layer_hpp */

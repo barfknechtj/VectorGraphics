@@ -35,11 +35,6 @@ void Framework::PlacedGraphic::setGraphic(HVectorGraphic const& graphic)
     hGraphic = graphic;
 }
 
-void Framework::PlacedGraphic::moveGraphic(HVectorGraphic& graphic)
-{
-    hGraphic = std::move(graphic);
-}
-
 VG::HVectorGraphic const& Framework::PlacedGraphic::getGraphic() const
 {
     return hGraphic;

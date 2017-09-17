@@ -15,12 +15,10 @@
 #include "ICanvas.hpp"
 
 using namespace BitmapGraphics;
+using namespace VG;
 
 namespace Framework
 {
-    using Point = VG::Point;
-    using HVectorGraphic = VG::HVectorGraphic;
-    
     class PlacedGraphic
     {
     public:
@@ -38,7 +36,6 @@ namespace Framework
         Point const& getPlacementPoint() const;
         
         void setGraphic(HVectorGraphic const& graphic);
-        void moveGraphic(HVectorGraphic& graphic);
         HVectorGraphic const& getGraphic() const;
         
         void draw(HCanvas& canvas);
@@ -50,6 +47,8 @@ namespace Framework
         Point placementPoint;
         HVectorGraphic hGraphic;
     };
+    
+    using HPlacedGraphic = std::shared_ptr<PlacedGraphic>;
 }
 
 #endif /* PlacedGraphic_hpp */

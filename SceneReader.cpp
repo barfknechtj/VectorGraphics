@@ -8,11 +8,13 @@
 
 #include "SceneReader.hpp"
 #include "StrokeFactory.hpp"
+#include "VectorGraphic.h"
 
+using namespace Framework;
 using namespace Xml;
+using namespace VG;
 
-// TODO: reduce nested calls with separate subfunctions
-Framework::Scene Framework::SceneReader::readScene(const Xml::Element& sceneElement)
+Scene SceneReader::readScene(const Xml::Element& sceneElement)
 {
     Scene scene;
     scene.setHeight(std::stoi(sceneElement.getAttribute("height")));
@@ -20,60 +22,83 @@ Framework::Scene Framework::SceneReader::readScene(const Xml::Element& sceneElem
     
     for (auto layerElement : sceneElement.getChildElements())
     {
-        Layer layer(layerElement->getAttribute("alias"));
-        
-        for (auto placedGraphicElement : layerElement->getChildElements())
-        {
-            PlacedGraphic placedGraphic;
-            placedGraphic.setPlacementPoint(Point(std::stoi(placedGraphicElement->getAttribute("x")),
-                                                  std::stoi(placedGraphicElement->getAttribute("y"))
-                                                  ));
-            
-            for (auto vectorGraphicElement : placedGraphicElement->getChildElements())
-            {
-                HVectorGraphic vg = std::make_shared<VG::VectorGraphic>();
-                if(vectorGraphicElement->getAttribute("closed") == "true")
-                {
-                    vg->closeShape();
-                }
-                else
-                {
-                    vg->openShape();
-                }
-                
-                ChildElements vgChildren = vectorGraphicElement->getChildElements();
-                ChildElements::iterator vgChildIter = vgChildren.begin();
-                
-                if(vgChildIter->get()->getName() == "Stroke")
-                {
-                    vg->setStroke(StrokeFactory::createStroke(vgChildIter->get()->getAttribute("tip"),
-                                                              std::stoi(vgChildIter->get()->getAttribute("size")),
-                                                              Color(vgChildIter->get()->getAttribute("color"))));
-                    
-                    ++vgChildIter;
-                }
-                else
-                {   // default stroke is a single pixel black square
-                    vg->setStroke(StrokeFactory::createStroke());
-                }
-                
-                while(vgChildIter != vgChildren.end())
-                {
-                    vg->addPoint(Point(std::stoi(vgChildIter->get()->getAttribute("x")),
-                                                 std::stoi(vgChildIter->get()->getAttribute("y"))
-                                                 ));
-                    
-                    ++vgChildIter;
-                }
+        HLayer hLayer = _readLayer(*layerElement);
 
-                placedGraphic.moveGraphic(vg);
-            }
-
-            layer.insert(layer.end(), std::move(placedGraphic));
-        }
-
-        scene.insert(scene.end(), std::move(layer));
+        scene.insert(scene.end(), *hLayer);
     }
     
     return scene;
 }
+
+HLayer SceneReader::_readLayer(const Element& layerElement)
+{
+    HLayer hLayer{new Layer(layerElement.getAttribute("alias"))};
+    
+    for (auto placedGraphicElement : layerElement.getChildElements())
+    {
+        HPlacedGraphic hPg{_readPlacedGraphic(*placedGraphicElement)};
+        hLayer->insert(hLayer->end(), std::move(*hPg));
+    }
+    
+    return hLayer;
+}
+
+HPlacedGraphic SceneReader::_readPlacedGraphic(const Element& pgElement)
+{
+    HPlacedGraphic hPg{new PlacedGraphic()};
+    hPg ->setPlacementPoint(Point(std::stoi(pgElement.getAttribute("x")),
+                                  std::stoi(pgElement.getAttribute("y"))
+                                  ));
+    
+    for (auto vectorGraphicElement : pgElement.getChildElements())
+    {
+        HVectorGraphic hVg = _readVectorGraphic(*vectorGraphicElement);
+        hPg->setGraphic(hVg);
+    }
+    
+    return hPg;
+}
+
+HVectorGraphic SceneReader::_readVectorGraphic(const Element& vgElement)
+{
+    HVectorGraphic hVg{new VectorGraphic()};
+    
+    if(vgElement.getAttribute("closed") == "true")
+    {
+        hVg->closeShape();
+    }
+    else
+    {
+        hVg->openShape();
+    }
+
+    ChildElements vgChildren = vgElement.getChildElements();
+    ChildElements::iterator vgChildIter = vgChildren.begin();
+
+    // config stroke as per Xml
+    if(vgChildIter->get()->getName() == "Stroke")
+    {
+        hVg->setStroke(StrokeFactory::createStroke(vgChildIter->get()->getAttribute("tip"),
+                                                  std::stoi(vgChildIter->get()->getAttribute("size")),
+                                                  Color(vgChildIter->get()->getAttribute("color"))));
+        
+        ++vgChildIter;
+    }
+    else
+    {   // config stroke default: single pixel black square
+        hVg->setStroke(StrokeFactory::createStroke());
+    }
+
+    while(vgChildIter != vgChildren.end())
+    {
+        hVg->addPoint(Point(std::stoi(vgChildIter->get()->getAttribute("x")),
+                            std::stoi(vgChildIter->get()->getAttribute("y"))
+                            ));
+        
+        ++vgChildIter;
+    }
+
+    return hVg;
+}
+
+

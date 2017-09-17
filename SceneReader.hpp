@@ -14,12 +14,19 @@
 #include "XmlParse.hpp"
 #include "VectorGraphic.h"
 
+using namespace Xml;
+
 namespace Framework
 {
     class SceneReader
     {
     public:
-        static Framework::Scene readScene(const Xml::Element& element);
+        static Scene readScene(const Element& sceneElement);
+        
+    private:
+        static HLayer _readLayer(const Element& layerElement);
+        static HPlacedGraphic _readPlacedGraphic(const Element& pgElement);
+        static HVectorGraphic _readVectorGraphic(const Element& vgElement);
     };
 }
     

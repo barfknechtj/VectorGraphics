@@ -13,12 +13,12 @@
 
 TEST(ctor, PlacedGraphic)
 {
-    VG::HVectorGraphic vg(new VG::VectorGraphic);
-    Framework::PlacedGraphic pg(VG::Point(44, 55), vg);
+    VG::HVectorGraphic hVg(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg(VG::Point(44, 55), hVg);
     
     constexpr VG::Point expected(44, 55);
     CHECK_EQUAL(expected, pg.getPlacementPoint());
-    CHECK_EQUAL(vg, pg.getGraphic());
+    CHECK_EQUAL(hVg, pg.getGraphic());
 }
 
 TEST(getAndSetPlacementPoint, PlacedGraphic)
@@ -33,10 +33,10 @@ TEST(getAndSetPlacementPoint, PlacedGraphic)
 TEST(getAndSetGraphic, PlacedGraphic)
 {
     Framework::PlacedGraphic pg;
-    VG::HVectorGraphic vg(new VG::VectorGraphic);
-    pg.setGraphic(vg);
+    VG::HVectorGraphic hVg(new VG::VectorGraphic);
+    pg.setGraphic(hVg);
     
-    CHECK_EQUAL(vg, pg.getGraphic());
+    CHECK_EQUAL(hVg, pg.getGraphic());
 }
 
 TEST(getAndSetRGraphic, PlacedGraphic)
@@ -46,32 +46,31 @@ TEST(getAndSetRGraphic, PlacedGraphic)
     vg.addPoint(VG::Point(100,100));
     
     Framework::PlacedGraphic pg;
-    VG::HVectorGraphic hvg = std::make_shared<VG::VectorGraphic>(vg);
-    pg.moveGraphic(hvg);
+    VG::HVectorGraphic hVg = std::make_shared<VG::VectorGraphic>(vg);
+    pg.setGraphic(hVg);
     
     CHECK_EQUAL(true,
                 VG::Point(100,100) == pg.getGraphic()->getPoint(0));
-    CHECK_EQUAL(true, hvg == NULL);
 }
 
 TEST(equal, PlacedGraphic)
 {
-    VG::HVectorGraphic vg1(new VG::VectorGraphic);
-    Framework::PlacedGraphic pg1(VG::Point(2, 2), vg1);
+    VG::HVectorGraphic hVg1(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg1(VG::Point(2, 2), hVg1);
     
-    VG::HVectorGraphic vg2(new VG::VectorGraphic);
-    Framework::PlacedGraphic pg2(VG::Point(2, 2), vg2);
+    VG::HVectorGraphic hVg2(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg2(VG::Point(2, 2), hVg2);
     
     CHECK_EQUAL(false, pg1 == pg2)
 }
 
 TEST(unequal, PlacedGraphic)
 {
-    VG::HVectorGraphic vg1(new VG::VectorGraphic);
-    Framework::PlacedGraphic pg1(VG::Point(2, 2), vg1);
+    VG::HVectorGraphic hVg1(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg1(VG::Point(2, 2), hVg1);
     
-    VG::HVectorGraphic vg2(new VG::VectorGraphic);
-    Framework::PlacedGraphic pg2(VG::Point(2, 3), vg2);
+    VG::HVectorGraphic hVg2(new VG::VectorGraphic);
+    Framework::PlacedGraphic pg2(VG::Point(2, 3), hVg2);
     
     CHECK_EQUAL(true, pg1 != pg2)
 }
