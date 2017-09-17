@@ -8,7 +8,6 @@
 
 #include "BasicCanvas.hpp"
 #include <fstream>
-#include <stack>
 
 using namespace BitmapGraphics;
 
@@ -79,4 +78,9 @@ int BasicCanvas::getHeight() const
 HBitmapIterator BasicCanvas::createBitmapIterator() const
 {
     return hCanvas->createIterator();
+}
+
+HBitmapIterator BasicCanvas::createBitmapReverseIterator() const
+{
+    return hCanvas->createReverseIterator();
 }

@@ -110,7 +110,6 @@ namespace VG
         hStroke = std::move(stroke);
     }
     
-    // TODO: add support for closed VG's
     void VectorGraphic::draw(HCanvas& canvas, const Point& offset)
     {
         HPen hPen = hStroke->createPen();

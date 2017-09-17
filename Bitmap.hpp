@@ -35,6 +35,7 @@ namespace BitmapGraphics
         
         typedef ScanLine::iterator ColorIterator;
         typedef ScanLineCollection::iterator ScanLineIterator;
+        typedef ScanLineCollection::reverse_iterator ScanLineRevIterator;
         
         Bitmap() = default;
         Bitmap(const int& width, const int& height, std::istream& sourceStream = std::cin);
@@ -42,9 +43,12 @@ namespace BitmapGraphics
         ~Bitmap() = default;
         
         ScanLineIterator begin() {return myScanLineCollection.begin();}
+        ScanLineRevIterator rbegin() {return myScanLineCollection.rbegin();}
         ScanLineIterator end() {return myScanLineCollection.end();}
+        ScanLineRevIterator rend() {return myScanLineCollection.rend();}
         
         HBitmapIterator createIterator();
+        HBitmapIterator createReverseIterator();
         
         int calcNumOfPads() const;
         

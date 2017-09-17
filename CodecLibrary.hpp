@@ -42,5 +42,7 @@ namespace BitmapGraphics
         std::list<HBitmapDecoder> myDecoders;
         std::list<HBitmapEncoder> myEncoders;
     };
+    
+    using HCodecLibrary = std::shared_ptr<CodecLibrary>;
 }
 #endif /* CodecLibrary_hpp */

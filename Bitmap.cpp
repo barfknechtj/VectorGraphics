@@ -6,10 +6,10 @@
 //  Copyright © 2017 Jared Barfknecht. All rights reserved.
 //
 
+#include <sstream>
 #include "Bitmap.hpp"
 #include "BitmapIterator.hpp"
-
-#include <sstream>
+#include "BitmapReverseIterator.hpp"
 
 using BitmapGraphics::Bitmap;
 typedef std::list<BitmapGraphics::Color> ScanLine;
@@ -80,6 +80,11 @@ int Bitmap::calcNumOfPads() const
 HBitmapIterator Bitmap::createIterator()
 {
     return std::make_shared<BitmapIterator>(*this);
+}
+
+HBitmapIterator Bitmap::createReverseIterator()
+{
+    return std::make_shared<BitmapReverseIterator>(*this);
 }
 
 void Bitmap::write(std::ostream& destinationStream) const

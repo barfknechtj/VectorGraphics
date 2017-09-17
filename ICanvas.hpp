@@ -23,6 +23,7 @@ namespace BitmapGraphics
         virtual int getWidth () const = 0;
         virtual int getHeight () const = 0;
         virtual HBitmapIterator createBitmapIterator () const = 0;
+        virtual HBitmapIterator createBitmapReverseIterator () const = 0;
     };
     
     using HCanvas = std::shared_ptr<ICanvas>;

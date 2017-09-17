@@ -10,7 +10,6 @@
 #define BasicCanvas_hpp
 
 #include <stdio.h>
-#include <vector>
 #include "Point.h"
 #include "Color.hpp"
 #include "Bitmap.hpp"
@@ -36,7 +35,7 @@ namespace BitmapGraphics
         virtual int getWidth() const;
         virtual int getHeight() const;
         virtual HBitmapIterator createBitmapIterator() const;
-        
+        virtual HBitmapIterator createBitmapReverseIterator () const;
     };
 }
 

@@ -14,7 +14,7 @@
 #include "TestHarness.h"
 #include "XmlReader.hpp"
 #include "BasicCanvas.hpp"
-//#include "WindowsBitmapFileProjector.hpp"
+#include "WindowsBitmapFileProjector.hpp"
 #include "WindowsBitmapDecoder.hpp"
 #include "WindowsBitmapEncoder.hpp"
 #include "CodecLibrary.hpp"
@@ -194,7 +194,9 @@ TEST(toCanvas, SceneReader)
     WindowsBitmapEncoder encoderPrototype{};
     HBitmapEncoder encoder {encoderPrototype.clone(canvasIterator)};
     
-    // Write out the bitmap to a different file with its write() method
+    /* Write out the canvas to a different file with its write() method
+       Image will be flipped since Windows Bitmap file format draws
+       from the last scanLine to the first scanLine */
     std::ofstream outputStream{"SceneXmlToCanvas.bmp", std::ios::binary};
     CHECK(outputStream.is_open());
     
@@ -202,30 +204,29 @@ TEST(toCanvas, SceneReader)
     outputStream.close();
 }
 
-/*
 TEST(toBitmap, SceneReader)
 {
     std::stringstream xmlStream(SceneXml);
+    Xml::Reader reader;
     
     // Parse the XML into a DOM
-    Xml::HElement root = Xml::Reader::loadXml(xmlStream);
+    auto root = reader.loadXml(xmlStream);
     
     // Construct a vector graphic Scene from the DOM
     Framework::Scene scene = Framework::SceneReader::readScene(*root);
     
     // Create an empty Canvas
-    Color backgroundColor(100, 100, 100);
+    Color backgroundColor{100, 100, 100};
     HCanvas canvas = std::make_shared<BasicCanvas>(scene.getWidth(), scene.getHeight(), backgroundColor);
     
     // Draw the Scene onto the Canvas
     scene.draw(canvas);
     
-    // Create a WindowsBitmapFileProjector and give it an output file name to create
-    // Also give it the CodecLibrary ("dependency injection").
+    /* Create a WindowsBitmapFileProjector and give it an output file name to create
+       Also give it the CodecLibrary ("dependency injection"). */
     CodecLibrarySetup codecLibrary;
     HProjector projector = std::make_shared<WindowsBitmapFileProjector>("output_scene.bmp", codecLibrary);
     
     // Project the Canvas into the bitmap file
     projector->projectCanvas(canvas);
 }
-*/
