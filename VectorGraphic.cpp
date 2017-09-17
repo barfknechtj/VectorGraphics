@@ -142,6 +142,25 @@ namespace VG
             startPoint = endPoint;
             ++pointIter;
         }
+        
+        if(this->isClosed())
+        {
+            // draw points to close VectorGraphic
+            LineIterator lineIter(*myPath.begin(), *(--myPath.end()));
+            while(!lineIter.isEnd())
+            {
+                VG::Point point = lineIter.getCurrentPoint();
+                
+                int x0 = point.getX();
+                int y0 = point.getY();
+                
+                int x = x0 + offset.getX();
+                int y = y0 + offset.getY();
+                
+                hPen->drawPoint(canvas, Point(x, y));
+                lineIter.nextPoint();
+            }
+        }
     }
     
     bool VectorGraphic::operator==(const VectorGraphic& rhs) const
