@@ -19,7 +19,7 @@ namespace BitmapGraphics
     {
     public:
         virtual void setPixelColor (VG::Point const& location, Color const& color) = 0;
-        virtual Color getPixelColor (VG::Point const& location) const = 0;
+        virtual Color getPixelColor (VG::Point const& location) = 0;
         virtual int getWidth () const = 0;
         virtual int getHeight () const = 0;
         virtual HBitmapIterator createBitmapIterator () const = 0;

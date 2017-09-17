@@ -10,6 +10,7 @@
 #define BasicCanvas_hpp
 
 #include <stdio.h>
+#include <mutex>
 #include "Point.h"
 #include "Color.hpp"
 #include "Bitmap.hpp"
@@ -23,15 +24,15 @@ namespace BitmapGraphics
         HBitmap hCanvas;
         HBitmapIterator hCanvasIter;
         
+        std::mutex myMutex;
+        
     public:
-        // TODO: add safety around writing and projecting canvas at
-        // same time
         BasicCanvas(const int& width, const int& height,
                     const Color& background  = Color{0,0,0});
         
         virtual void setPixelColor (VG::Point const& location,
                                     Color const& color);
-        virtual Color getPixelColor (VG::Point const& location) const;
+        virtual Color getPixelColor (VG::Point const& location);
         virtual int getWidth() const;
         virtual int getHeight() const;
         virtual HBitmapIterator createBitmapIterator() const;
