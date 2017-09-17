@@ -17,7 +17,7 @@ namespace BitmapGraphics
     class StrokeFactory
     {
     public:
-        static HStroke createStroke(const std::string& strokeType = "square",
+        static HStroke createStroke(const std::string& strokeTip = "square",
                                     const int& size = 1,
                                     const Color& color = Color{0, 0, 0});
         

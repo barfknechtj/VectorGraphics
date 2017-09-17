@@ -12,15 +12,15 @@
 
 using namespace BitmapGraphics;
 
-HStroke StrokeFactory::createStroke(const std::string& strokeType,
+HStroke StrokeFactory::createStroke(const std::string& strokeTip,
                                     const int& size,
                                     const Color& color)
 {
-    if(strokeType == "square")
+    if(strokeTip == "square")
     {
         return HStroke{new SquareStroke(size, color)};
     }
-    else if (strokeType == "slash")
+    else if (strokeTip == "slash")
     {
         return HStroke{new SlashStroke(size, color)};
     }
