@@ -2,6 +2,8 @@
 
 #include "LineIterator.hpp"
 
+using namespace VG;
+
 LineIterator::LineIterator(VG::Point const& beginPoint,
                            VG::Point const& endPoint)
     : myBeginPoint(beginPoint),

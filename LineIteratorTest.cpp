@@ -16,7 +16,7 @@ TEST(nextPixel, LineIterator)
     VG::Point startPoint(0, 0);
     VG::Point endPoint(5, 5);
     
-    LineIterator lineIterator(startPoint, endPoint);
+    VG::LineIterator lineIterator(startPoint, endPoint);
     std::list<VG::Point> points;
     
     while(!lineIterator.isEnd())
