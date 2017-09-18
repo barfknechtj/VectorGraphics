@@ -20,6 +20,11 @@ namespace BitmapGraphics
         SquareStroke(const int& size, const Color& color);
         ~SquareStroke() = default;
         
+        SquareStroke(const SquareStroke& src) = default;
+        SquareStroke& operator=(const SquareStroke& src) = default;
+        SquareStroke(SquareStroke&& src) = default;
+        SquareStroke& operator=(SquareStroke&& src) = default;
+        
         virtual void setSize(const int& size);
         virtual int getSize() const;
         virtual void setColor(Color const& color);

@@ -20,6 +20,11 @@ namespace BitmapGraphics
         SlashStroke(const int& size, const Color& color);
         ~SlashStroke() = default;
         
+        SlashStroke(const SlashStroke& src) = default;
+        SlashStroke& operator=(const SlashStroke& src) = default;
+        SlashStroke(SlashStroke&& src) = default;
+        SlashStroke& operator=(SlashStroke&& src) = default;
+        
         virtual void setSize(const int& size);
         virtual int getSize() const;
         virtual void setColor(Color const& color);

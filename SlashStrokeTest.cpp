@@ -16,6 +16,38 @@
 
 using namespace BitmapGraphics;
 
+TEST(copy, SlashStroke)
+{
+    SlashStroke stroke1(5, Color{255, 255, 255});
+    SlashStroke stroke2(stroke1);
+    
+    CHECK_EQUAL(true, (Color{255, 255, 255} == stroke1.getColor()));
+    CHECK_EQUAL(true, (Color{255, 255, 255} == stroke2.getColor()));
+}
+
+TEST(assignment, SlashStroke)
+{
+    SlashStroke stroke1(5, Color{255, 255, 255});
+    SlashStroke stroke2 = stroke1;
+    
+    CHECK_EQUAL(true, (Color{255, 255, 255} == stroke1.getColor()));
+    CHECK_EQUAL(true, (Color{255, 255, 255} == stroke2.getColor()));
+}
+
+TEST(copyMove, SlashStroke)
+{
+    SlashStroke stroke(SlashStroke(5, Color{255, 255, 255}));
+    
+    CHECK_EQUAL(true, (Color{255, 255, 255} == stroke.getColor()));
+}
+
+TEST(assignmentMove, SlashStroke)
+{
+    SlashStroke stroke = SlashStroke(5, Color{255, 255, 255});;
+    
+    CHECK_EQUAL(true, (Color{255, 255, 255} == stroke.getColor()));
+}
+
 TEST(getColor, SlashStroke)
 {
     SlashStroke stroke(5, Color{255, 255, 255});

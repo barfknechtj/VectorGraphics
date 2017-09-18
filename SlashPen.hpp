@@ -21,6 +21,11 @@ namespace BitmapGraphics
         SlashPen(const SlashStroke& stroke);
         ~SlashPen() = default;
         
+        SlashPen(const SlashPen& src) = default;
+        SlashPen& operator=(const SlashPen& src) = default;
+        SlashPen(SlashPen&& src) = default;
+        SlashPen& operator=(SlashPen&& src) = default;
+        
         void drawPoint(const HCanvas& canvas,
                        const VG::Point& point);
         

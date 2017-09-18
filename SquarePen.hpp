@@ -21,6 +21,11 @@ namespace BitmapGraphics
         SquarePen(const SquareStroke& stroke);
         ~SquarePen() = default;
         
+        SquarePen(const SquarePen& src) = default;
+        SquarePen& operator=(const SquarePen& src) = default;
+        SquarePen(SquarePen&& src) = default;
+        SquarePen& operator=(SquarePen&& src) = default;
+        
         void drawPoint(const HCanvas& canvas,
                        const VG::Point& point);
         

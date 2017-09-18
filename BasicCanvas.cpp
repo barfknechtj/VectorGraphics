@@ -86,7 +86,7 @@ int BasicCanvas::getHeight() const
 {
     return hCanvas->getHeight();
 }
-
+        
 HBitmapIterator BasicCanvas::createBitmapIterator() const
 {
     return hCanvas->createIterator();

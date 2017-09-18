@@ -24,6 +24,11 @@ namespace BitmapGraphics
                                    CodecLibrary& codecLibrary);
         ~WindowsBitmapFileProjector() = default;
         
+        WindowsBitmapFileProjector(const WindowsBitmapFileProjector& src) = default;
+        WindowsBitmapFileProjector& operator=(const WindowsBitmapFileProjector& src) = default;
+        WindowsBitmapFileProjector(WindowsBitmapFileProjector&& src) = default;
+        WindowsBitmapFileProjector& operator=(WindowsBitmapFileProjector&& src) = default;
+        
         virtual void projectCanvas(HCanvas const& canvas);
         
     private:
