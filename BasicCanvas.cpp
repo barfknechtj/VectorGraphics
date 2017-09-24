@@ -21,9 +21,6 @@ BasicCanvas::BasicCanvas(const int& width, const int& height,
 void BasicCanvas::setPixelColor (VG::Point const& location,
                                  Color const& color)
 {
-    // block if another thread is setting/getting pixel data
-    myMutex.lock();
-    
     if(location.getY() >= hCanvas->getHeight() ||
        location.getX() >= hCanvas->getWidth())
     {
@@ -41,6 +38,9 @@ void BasicCanvas::setPixelColor (VG::Point const& location,
     {
         hCanvasIter->nextPixel();
     }
+    
+    // block if another thread is setting/getting pixel data
+    myMutex.lock();
     
     hCanvasIter->setColor(color);
     
@@ -49,9 +49,6 @@ void BasicCanvas::setPixelColor (VG::Point const& location,
 
 Color BasicCanvas::getPixelColor(VG::Point const& location)
 {
-    // block if another thread is setting/getting pixel data
-    myMutex.lock();
-    
     if(location.getY() >= hCanvas->getHeight() ||
        location.getX() >= hCanvas->getWidth())
     {
@@ -69,6 +66,9 @@ Color BasicCanvas::getPixelColor(VG::Point const& location)
     {
         hCanvasIter->nextPixel();
     }
+    
+    // block if another thread is setting/getting pixel data
+    myMutex.lock();
     
     Color retrievedColor(hCanvasIter->getColor());
     
