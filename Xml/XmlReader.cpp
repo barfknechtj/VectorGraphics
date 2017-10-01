@@ -8,6 +8,8 @@
 
 #include "XmlReader.hpp"
 
+using namespace Xml;
+
 void Xml::Reader::_pushElementTagToStack(const std::string& elementName)
 {
     myElementStack.push(elementName);

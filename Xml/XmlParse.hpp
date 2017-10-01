@@ -20,7 +20,6 @@
 bool getElement(std::istream& xml, std::string& name);
 bool getAttribute(std::istream& xml, std::string& name, std::string& value);
 
-//------------------------------------------------------------------------
 class InvalidXmlSyntax : public std::exception
 {
 public:

@@ -12,7 +12,6 @@
 #include <memory>
 #include <string>
 
-
 bool getElement(std::istream& xml, std::string& name)
 {
     char c{};
