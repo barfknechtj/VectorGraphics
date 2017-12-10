@@ -85,6 +85,113 @@ const std::string SceneXml = R"(
     </Layer>
 </Scene>)";
 
+const std::string houseSceneXml = R"(
+<Scene width="1000" height="1000">
+    <Layer alias="scenery">
+        <!-- Sun -->
+        <PlacedGraphic x="0" y="0">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="10" color="FF9224" />
+                <Point x="900" y="1000" />
+                <Point x="900" y="975"  />
+                <Point x="915" y="935"  />
+                <Point x="935" y="915"  />
+                <Point x="975" y="900"  />
+                <Point x="1000" y="900" />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- Ray1 -->
+        <PlacedGraphic x="0" y="0">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="FFFF00" />
+                <Point x="900" y="975"  />
+                <Point x="850" y="975"  />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- Ray2 -->
+        <PlacedGraphic x="0" y="0">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="FFFF00" />
+                <Point x="915" y="935"  />
+                <Point x="860" y="915"  />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- Ray3 -->
+        <PlacedGraphic x="0" y="0">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="FFFF00" />
+                <Point x="935" y="915"  />
+                <Point x="910" y="865"  />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- Ray4 -->
+        <PlacedGraphic x="0" y="0">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="FFFF00" />
+                <Point x="975" y="900"  />
+                <Point x="975" y="850"  />
+            </VectorGraphic>
+        </PlacedGraphic>
+    </Layer>
+    <Layer alias="house">
+        <!-- Building -->
+        <PlacedGraphic x="0" y="0">
+            <VectorGraphic closed="false">
+            <Stroke tip="square" size="2" color="0000FF" />
+            <Point x="300" y="0" />
+            <Point x="300" y="400" />
+            <Point x="700" y="400" />
+            <Point x="700" y="0" />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- Roof -->
+        <PlacedGraphic x="0" y="0">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="0000FF" />
+                <Point x="300" y="400" />
+                <Point x="500" y="550" />
+                <Point x="700" y="400" />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- Door -->
+        <PlacedGraphic x="400" y="0">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="000000" />
+                <Point x="0"   y="0" />
+                <Point x="0"   y="150" />
+                <Point x="100" y="150" />
+                <Point x="100" y="0" />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- Window -->
+        <PlacedGraphic x="600" y="300">
+            <VectorGraphic closed="true">
+                <Stroke tip="square" size="5" color="FF0000" />
+                <Point x="0"  y="0" />
+                <Point x="0"  y="80" />
+                <Point x="80" y="80" />
+                <Point x="80" y="0" />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- WindowBar1 -->
+        <PlacedGraphic x="600" y="300">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="000000" />
+                <Point x="40"  y="0" />
+                <Point x="40"  y="80" />
+            </VectorGraphic>
+        </PlacedGraphic>
+        <!-- WindowBar2 -->
+        <PlacedGraphic x="600" y="300">
+            <VectorGraphic closed="false">
+                <Stroke tip="square" size="2" color="000000" />
+                <Point x="0"  y="40" />
+                <Point x="80"  y="40" />
+            </VectorGraphic>
+        </PlacedGraphic>
+    </Layer>
+</Scene>)";
+
 using namespace BitmapGraphics;
 
 TEST(ReadScene, SceneReader)
@@ -229,4 +336,37 @@ TEST(toBitmap, SceneReader)
     
     // Project the Canvas into the bitmap file
     projector->projectCanvas(canvas);
+}
+
+TEST(houseScene, SceneReader)
+{
+    std::stringstream xmlStream(houseSceneXml);
+    Xml::Reader reader;
+    
+    // Parse the XML into a DOM
+    auto root = reader.loadXml(xmlStream);
+    
+    // Construct a vector graphic Scene from the DOM
+    Framework::Scene scene = Framework::SceneReader::readScene(*root);
+    
+    // Create an empty Canvas
+    Color backgroundColor{192, 192, 192};
+    HCanvas canvas = std::make_shared<BasicCanvas>(scene.getWidth(), scene.getHeight(), backgroundColor);
+    
+    // Draw the Scene onto the Canvas
+    scene.draw(canvas);
+    
+    HBitmapIterator canvasIterator = canvas->createBitmapIterator();
+    
+    WindowsBitmapEncoder encoderPrototype{};
+    HBitmapEncoder encoder {encoderPrototype.clone(canvasIterator)};
+    
+    /* Write out the canvas to a different file with its write() method
+     Image will be flipped since Windows Bitmap file format draws
+     from the last scanLine to the first scanLine */
+    std::ofstream outputStream{"houseScene.bmp", std::ios::binary};
+    CHECK(outputStream.is_open());
+    
+    encoder->encodeToStream(outputStream);
+    outputStream.close();
 }
