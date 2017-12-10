@@ -65,4 +65,4 @@ Bitmaps can be created from an xml-like notation.
 ...more
 ```
 
-![House Example](https://github.com/barfknechtj/VectorGraphics/tree/master/OutputPics/houseScene-small-size.png "House Example")
+See: https://github.com/barfknechtj/VectorGraphics/tree/master/OutputPics/houseScene_small_size.png
